@@ -1,0 +1,81 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Portail professionnel & famille</title>
+    {% block stylesheets %}
+        <style>
+            .core{
+                margin: auto;
+            }
+            .logo{
+                max-width: 278px;
+                width: 278px;
+            }
+            .body{
+                text-align: center;
+            }
+            .agayo{
+                background: #53b5de;
+                border: 1px solid #3eadd8;
+                box-shadow: 0px 4px 6px #a6a6a6;
+            }
+            .ahlig{
+                background: #fcfcfc;
+                box-shadow: 0 1px 16px -5px black;
+                padding: 51px;
+            }
+            .btn{
+                padding: 10px 44px 10px 40px;
+                background: #ee560b;
+                text-decoration: none;
+                font-size: 17px;
+                color: #fff;
+                text-transform: uppercase;
+                font-weight: 700;
+                /*line-height: 40px;*/
+                width: 50%;
+                display: inline-block;
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <table class="core">
+            <tr class="head">
+                <td align="center" class="agayo" >
+                    <a href="{{ url('homepage') }}" ><img class="logo" width="278" src="http://46.227.22.66/relais_assmat/web/img/logo.png"></a>
+                </td>
+            </tr>
+            <tr class="body">
+                <td class="ahlig">
+                    <p align="left">Bonjour {{ user.username }}</p>
+                    <p>Nous vous mettons ci-dessous vos accès au Portail professionnel & famille:</p>
+                    <div style="list-style: none;">
+                        <span>Login : {{ user.username }}</span><br>
+                        <span>Mot de passe : {{ user.userkey }}</span>
+                    </div>
+                    <br>
+                    <a href="{{ url('homepage') }}/login" class="btn" title="Connexion">Connexion</a>
+                    <br>
+                    <p>
+                        {% set urlo = user.usertype == "parent" ? "editInfoGenirale" : user.usertype == "assmat" ? "editAssmattesto" : "#"  %}
+                        Pour changer votre mot de passe veuillez vous connecter et cliquer <a href="{{ url(urlo) }}" title="Changer le mo de passe." >ici</a>.
+                    </p>
+                </td>
+            </tr>
+            <tr class="footer">
+                <td align="center">
+                    <a href="{{ url('homepage') }}" >
+                        <img class="logo" width="158" src="http://46.227.22.66/relais_assmat/web/img/logo.png">
+                    </a>
+                    <a href="{{ url('homepage') }}" style="font-size: 13px;"> Portail professionnel & famille </a>
+                </td>
+            </tr>
+            {#{{ dump(emailto ) }}#}
+            {#{{ dump(emails) }}#}
+        </table>
+    {% endblock %}
+</body>
+</html>

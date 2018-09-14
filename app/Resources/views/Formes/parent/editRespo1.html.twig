@@ -1,0 +1,114 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>modifier informations du responsable 1</h2>
+            <div class="panlecontainer panleEdit">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        <a class="btn btn-default btn-xs go_Back"> <i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  </a>
+                        <a class="btn btn-primary btn-xs" id="saveResp1Info"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                {{ form_start(ParentForm, {'attr': {'id': 'appbundle_gwResponsable1_edit'}}) }}
+                    <div>
+                        {{ form_label(ParentForm.civilite, 'Civilite :') }}
+                        {{ form_errors(ParentForm.civilite) }}
+                        {{ form_widget(ParentForm.civilite , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.nom, 'Nom :') }}
+                        {{ form_errors(ParentForm.nom) }}
+                        {{ form_widget(ParentForm.nom , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.prenom, 'Prénom :') }}
+                        {{ form_errors(ParentForm.prenom) }}
+                        {{ form_widget(ParentForm.prenom , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.cp, 'Code postal :') }}
+                        {{ form_errors(ParentForm.cp) }}
+                        {{ form_widget(ParentForm.cp , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.numRue, 'Numéro de rue :') }}
+                        {{ form_errors(ParentForm.numRue) }}
+                        {{ form_widget(ParentForm.numRue , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.rue1, 'Rue 1 :') }}
+                        {{ form_errors(ParentForm.rue1) }}
+                        {{ form_widget(ParentForm.rue1 , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.rue2, 'Rue 2 :') }}
+                        {{ form_errors(ParentForm.rue2) }}
+                        {{ form_widget(ParentForm.rue2 , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.ville , 'Ville :') }}
+                        {{ form_errors(ParentForm.ville ) }}
+                        {{ form_widget(ParentForm.ville  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.quartier , 'Quartier :') }}
+                        {{ form_errors(ParentForm.quartier ) }}
+                        {{ form_widget(ParentForm.quartier  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.secteur , 'Secteur :') }}
+                        {{ form_errors(ParentForm.secteur ) }}
+                        {{ form_widget(ParentForm.secteur  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.rivoli , 'Rivoli/Fantor :') }}
+                        {{ form_errors(ParentForm.rivoli ) }}
+                        {{ form_widget(ParentForm.rivoli  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.telPerso , 'Téléphone Perso :') }}
+                        {{ form_errors(ParentForm.telPerso ) }}
+                        {{ form_widget(ParentForm.telPerso  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.telPro , 'Téléphone Pro :') }}
+                        {{ form_errors(ParentForm.telPro ) }}
+                        {{ form_widget(ParentForm.telPro  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.portable , 'Portable :') }}
+                        {{ form_errors(ParentForm.portable ) }}
+                        {{ form_widget(ParentForm.portable  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.fax, 'Fax :') }}
+                        {{ form_errors(ParentForm.fax) }}
+                        {{ form_widget(ParentForm.fax , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.adresseMail , 'Adresse mail :') }}
+                        {{ form_errors(ParentForm.adresseMail ) }}
+                        {{ form_widget(ParentForm.adresseMail , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.adresseMailPro , 'Adresse mail Pro :') }}
+                        {{ form_errors(ParentForm.adresseMailPro ) }}
+                        {{ form_widget(ParentForm.adresseMailPro  , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.profession, 'Profession :') }}
+                        {{ form_errors(ParentForm.profession) }}
+                        {{ form_widget(ParentForm.profession , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.lieutravail, 'Lieu de travail :') }}
+                        {{ form_errors(ParentForm.lieutravail) }}
+                        {{ form_widget(ParentForm.lieutravail , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                {{ form_end(ParentForm)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

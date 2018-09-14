@@ -1,0 +1,140 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>informations de [ {{ user.username }} ] </h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                    	<a class="btn btn-default btn-xs" href="{{ path('admin_users', {'userType': user.usertype}) }}">
+                    		<i class=" fa fa-list" data-toggle="tooltip" data-placement="top" title="Afficher la liste"></i>
+                		</a>
+                      <a class="btn btn-primary btn-xs" href=" {{ path('edit_parent' , {'id': user.id } ) }} " > <i class=" fa fa-pencil-square-o"></i> Modifier </a>
+                    </div>
+                </div>
+				<div class="col-md-12 userinfo">
+					<div class="table-responsive">
+						<table class="table table-condensed table-responsive table-user-information">
+							<tbody>
+								<tr>
+									<td>
+										<strong>
+											<span class="fa fa-user text-primary"></span>
+											Identificacion
+										</strong>
+									</td>
+									<td class="text-primary">
+										{{ user.username }}
+									</td>
+								</tr>
+                                {% if ( user.usertype == "parent" )%}
+                                    {% set responams =  parent_generator.getResposNams(user.p_a_pt_id) %}
+									<tr>
+										<td>
+											<strong>
+												<span class="fa fa-user text-primary"></span>
+												Responsable 1
+											</strong>
+										</td>
+										<td class="text-primary">
+											{{ ( responams.nam1 != "" ? responams.nam1 : "" )~' '~ ( responams.pre1 != "" ? responams.pre1 : "" ) }}
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<strong>
+												<span class="fa fa-user text-primary"></span>
+												Responsable 2
+											</strong>
+										</td>
+										<td class="text-primary">
+											{{ ( responams.nam2 != "" ? responams.nam2 : "" )~' '~ ( responams.pre2 != "" ? responams.pre2 : "" ) }}
+										</td>
+									</tr>
+                                {% endif %}
+								<tr>
+									<td>
+										<strong>
+											<span class="fa fa-id-card text-primary"></span>
+											Rôle
+										</strong>
+									</td>
+									<td class="text-primary">
+										{{ user.usertype }}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>
+											<span class="fa fa-envelope text-primary"></span>
+											Email
+										</strong>
+									</td>
+									<td class="text-primary">
+										{{ user.email }}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>
+											<span class="fa fa-check-circle text-primary"></span>
+											Activer :
+										</strong>
+									</td>
+									<td class="text-primary">
+										<i class="fa {{ (user.enabled )? 'fa-check-square-o':'fa-square-o'  }}  fa-14 "></i>
+									</td>
+								</tr>
+								{#<tr>#}
+									{#<td>#}
+										{#<strong>#}
+											{#<span class="fa fa-calendar-times-o text-primary"></span>#}
+											{#Créé le#}
+										{#</strong>#}
+									{#</td>#}
+									{#<td class="text-primary">#}
+										{#20 mai 2017#}
+									{#</td>#}
+								{#</tr>#}
+								{#<tr>#}
+									{#<td>#}
+										{#<strong>#}
+											{#<span class="fa fa-calendar-check-o text-primary"></span>#}
+											{#Modifié le#}
+										{#</strong>#}
+									{#</td>#}
+									{#<td class="text-primary">#}
+										 {#20 mai 2017#}
+									{#</td>#}
+								{#</tr>#}
+								<tr>
+									<td>
+										<strong>
+											<span class="fa fa-calendar-check-o text-primary"></span>
+											Date Email :
+										</strong>
+									</td>
+									<td class="text-primary">
+                                        {{ user.dateEmail ?  user.dateEmail|date('d/m/Y') : "" }}
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<strong>
+											<span class="fa fa-calendar-check-o text-primary"></span>
+											Date de mais a jour :
+										</strong>
+									</td>
+									<td class="text-primary">
+                                        {{ user.dateMAJ ?  user.dateMAJ|date('d/m/Y') : "" }}
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

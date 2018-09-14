@@ -1,0 +1,27 @@
+app_update.logs:
+    resource: "@AppBundle/Controller/update_logsController.php"
+    type:     annotation
+
+app_document:
+    resource: "@AppBundle/Controller/documentController.php"
+    type:     annotation
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+editPassword:
+    path:     /Admin/editPassword/{id}
+    defaults: { _controller: AppBundle:Admin/AdminUsers:editPassword }
+    methods:  [POST]
+    options: { expose: true }
+#adesigns_calendar:
+#  resource: "@ADesignsCalendarBundle/Resources/config/routing.xml"
+
+#oneup_uploader
+#oneup_uploader:
+#    resource: .
+#    type: uploader

@@ -1,0 +1,188 @@
+{% extends 'assmatpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>ASSISTANT MATERNEL </h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        {% if ( parameters.0.allowUpdate) %}
+                            <a class="btn btn-primary btn-xs" href=" {{ path('editAssmatInfo') }} "> <i class=" fa fa-edit"></i> Modifier </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-responsive table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Situation famille :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        {% set sitF = AssmatData.situationFamiliale  %}
+                                        <span> {{ sitF != null ?  parent_generator.getSituationFamilleNam( sitF ) :  parent_generator.getSituationFamilleNam( 0 ) }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Civilité :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.civilite != null ? parent_generator.getCivilites(AssmatData.civilite): "."}} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            {#Nom de jeune fille :#}
+                                            Nom :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.nomNaissance }} </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Prénom :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.prenomNaissance }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Date de Naissance :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.dateNaissance|date("d/m/Y") }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Numéro de rue :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.numRue }} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Rue :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.rue1 }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Complément adresse :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.rue2 }} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Code postal :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.cp }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Ville :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.ville != null ? AssmatData.ville.nom : "."}} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Quartier :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.quartier != null ? AssmatData.quartier.titre : "."  }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Secteur :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.secteur != null ? AssmatData.secteur.titre : "."}} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Rivoli/Fantor :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.rivoli }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Téléphone fixe :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.telFixe}} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Téléphone portable :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.telPortable }}</span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Adresse mail :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ AssmatData.adresseMail}} </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

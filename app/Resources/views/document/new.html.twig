@@ -1,0 +1,186 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/fullcalendar.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/qtip.min.css') }}" />
+{% endblock %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Creation du document </h2>
+            {{ form_start(form) }}
+            <div class="panlecontainer">
+        <div class="panleContainerHead">
+            <div class="clearfix col-lg-6 updateinfo">
+                <a href="{{ path('document_index') }}" class="btn btn-default btn-xs">
+                    <i class=" fa fa-list" data-toggle="tooltip" data-placement="top" title="Liste"></i>
+                </a>
+                {#<a class="btn btn-primary btn-xs" href="{{ path('document_new') }}"> <i class=" fa fa-upload "></i> Updload </a>#}
+                <button type="submit" class="btn btn-primary btn-xs"><i class=' fa fa-upload '></i> Sauvegarder </button>
+            </div>
+        </div>
+        <div class="panlecontainer">
+            {{ form_errors(form) }}
+            <div class="col-md-12 userinfo">
+                <div class="table-responsive" id="InfosForm">
+                    <table class="table table-condensed table-responsive table-user-information">
+                        <tbody>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right text-primary"></span>
+                                    {{ form_label(form.title, "Titre :", {'label_attr': {'class': 'foo'}}) }}
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ form_widget(form.title , { 'attr': {'class': 'form-control '} } ) }}
+                            </td>
+                            <td>
+                                {{ form_errors(form.title) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa  fa-caret-right text-primary"></span>
+                                    {{ form_label(form.commant, "Commentaire :", {'label_attr': {'class': 'foo'}}) }}
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ form_widget(form.commant , { 'attr': {'class': 'form-control minWidth'} } ) }}
+                            </td>
+                            <td>
+                                {{ form_errors(form.commant) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa  fa-caret-right  text-primary"></span>
+                                    {{ form_label(form.file, "Document:", {'label_attr': {'class': 'foo'}}) }}
+
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ form_widget(form.file , { 'attr': { 'name': 'file' , 'id' : 'file' } } ) }}
+                                <small>( word, pdf, png ou jpeg )</small>
+                            </td>
+                            <td>
+                                {{ form_errors(form.file) }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa  fa-caret-right  text-primary"></span>
+                                    Gestion de l'accés au document :
+                                </strong>
+                            </td>
+                            <td class="text-primary documentAccess">
+                                <div class=" col-lg-12 col-md-12 col-sm-12" style="padding: 0px;">
+                                    <div class="regele col-lg-12 col-md-12 col-sm-12">
+                                        <lable>Tous les utilisateurs </lable>
+                                        <div class="roundedOne inDivRight">
+                                            <input type="hidden" value="parent" id="usertype">
+                                            <input type="checkbox" checked="checked" id="check_All" name="appbundle_doc_[all]" >
+                                            <label for="check_All"></label>
+                                        </div>
+                                    </div>
+
+                                    {#<div class="clearfix"></div>#}
+                                    <div class="checkesGroupe col-lg-12 col-md-12 col-sm-12">
+                                        <div class="col-lg-5 col-md-5  col-sm-5 ">
+                                            <lable>Parents</lable>
+                                            <div class="slideThree inDivfloatright">
+                                                {#<input type="checkbox" id="appbundle_para_infogeneselect" name="appbundle_para_[infogeneselect]" class="activatecheck"#}
+                                                {#{{ (attribute(params2, "pr_infogenerales").dispaly == true ) ? 'checked="checked"': "" }}>#}
+                                                <input type="checkbox" id="check_parent" name="appbundle_doc_[parent]">
+                                                <label class="toggle-check" for="check_parent"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 col-md-7  col-sm-7 ">
+                                            <lable>Sélectionner des parents</lable>
+                                            <input type="hidden" id="sparentids" name="appbundle_doc_[sparentids]" value="">
+                                            <div class="slideThree inDivfloatright" style="margin-right: 16px;">
+                                                <input type="checkbox" id="check_sparent" name="appbundle_doc_[sparent]" >
+                                                <label class="toggle-check" > </label>
+                                                <a id="showSelectModaleParent" data-usertype="parent" data-todo="getusersoftype" data-toggle="modal" data-target="#modal_doc_acces"
+                                                   class="btn btn-default btn-xs listeicone">
+                                                    <i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Sélectionner les parents"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-lg-5 col-md-5  col-sm-5 ">
+                                            <lable>AM</lable>
+                                            <div class="slideThree inDivfloatright">
+                                                <input type="checkbox" id="check_assmat" name="appbundle_doc_[assmat]">
+                                                <label class="toggle-check" for="check_assmat"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 col-md-7  col-sm-7 ">
+                                            <lable>Sélectionner des AM</lable>
+                                            <input type="hidden" id="samids" name="appbundle_doc_[sassmatids]" value="" >
+                                            <div class="slideThree inDivfloatright" style="margin-right: 16px;">
+                                                <input type="checkbox" id="check_sam" name="appbundle_doc_[sassmat]" >
+                                                <label class="toggle-check" for="check_sam"></label>
+                                                <a id="showSelectModaleAm" data-usertype="assmat" data-todo="getusersoftype" data-toggle="modal" data-target="#modal_doc_acces"
+                                                   class="btn btn-default btn-xs listeicone">
+                                                    <i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Sélectionner les assmats"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-lg-5 col-md-5  col-sm-5 ">
+                                            <lable>Partenaires</lable>
+                                            <div class="slideThree inDivfloatright">
+                                                <input type="checkbox" id="check_part" name="appbundle_doc_[part]" >
+                                                <label class="toggle-check" for="check_part"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-7 col-md-7 col-sm-7 ">
+                                            <lable>Sélectionner des partenaires</lable>
+                                            <input type="hidden" id="spartids" name="appbundle_doc_[spartids]" value="" >
+                                            <div class="slideThree inDivfloatright" style="margin-right: 16px;">
+                                                <input type="checkbox" id="check_spart" name="appbundle_doc_[spart]" >
+                                                <label class="toggle-check" for="check_spart"></label>
+                                                <a id="showSelectModalePart" data-usertype="part" data-todo="getusersoftype" data-toggle="modal" data-target="#modal_doc_acces"
+                                                   class="btn btn-default btn-xs listeicone">
+                                                    <i class="fa fa-list" data-toggle="tooltip" data-placement="top" title="Sélectionner les partenaires"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <div class="col-lg-12 col-md-12  col-sm-12 ">
+                                            <lable>Les utilisateurs qui sont inscrit dans des temps collectifs</lable>
+                                            <input type="hidden" id="scollectifids" name="appbundle_doc_[scollectifids]" value="" >
+                                            <div class="slideThree inDivfloatright" style="margin-right: 16px;">
+                                                <input type="checkbox" id="check_scollectif" name="appbundle_doc_[scollectif]" >
+                                                <label class="toggle-check" for="check_scollectif"></label>
+                                                <a id="showSelectModaletempscol" data-usertype="tempcol" data-todo="gettempcol" data-toggle="modal" data-target="#modal_doc_acces"
+                                                   class="btn btn-default btn-xs listeicone">
+                                                    <i class="fa fa-calendar" data-toggle="tooltip" data-placement="top" title="Sélectionner les temps collectifs "></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/fullcalendar.js') }}"></script>
+    <script src="{{ asset('js/agendaLocal_fr.js') }}"></script>
+    <script src="{{ asset('js/qtip.min.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div id="wrapper">
+        <div id="container" style="margin-top: 91px ">
+            <div class="row loginForm  ">
+                <form action="{{ path("fos_user_security_check") }}" method="post">
+                    <div class="login">
+                      <img src="{{ asset('img/parent.png') }}" >
+                      <div class="formholder">
+                        <div class="randompad">
+                            <label for="username">Email</label>
+                            <input type="text" id="username" name="_username"  required="required" />
+                            <label for="password">Mot de passe</label>
+                            <input type="password" id="password" name="_password" required="required" />
+                            <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                            <label for="remember_me">Se souvenir de moi</label>
+                            <input type="submit" id="_submit" name="_submit" value="Se Connecter" />
+                        </div>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

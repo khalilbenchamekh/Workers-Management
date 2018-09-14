@@ -1,0 +1,168 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>informations générales
+            </h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    {% if parameters.0.allowUpdate %}
+                        <div class="clearfix col-lg-6 updateinfo">
+                            <a class="btn btn-primary btn-xs" href=" {{ path('editInfoGenirale') }} "> <i class=" fa fa-edit"></i> Modifier </a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="col-md-12 ">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-responsive table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Date de saisie :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.dateSaisie|date("d/m/Y") }} </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Date de demande d'accueil
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.dateDemande|date("d/m/Y") }} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            N° de la fiche :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.numFiche }} </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Situation famille :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.situationFamille != null ? parent_generator.getSituationFamilleNam(ParentData.situationFamille): "." }} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Statut de la famille :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.statutparent != null ? ParentData.statutparent.title : "" }} </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Relais :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.relais != null ? ParentData.relais.title : ""}} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Téléphone Urgence :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">{# |split('', 2)|join('.') #}
+                                        <span> {{ ParentData.telUrgence  }} </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Téléphone :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">{# |split('', 2)|join('.') #}
+                                        <span> {{  ParentData.telEnvoi }} </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Adresse mail :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> {{ ParentData.emailEnvoi }} </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            {#<span class="fa fa-caret-right  text-primary"></span>#}
+                                            {#Téléphone Urgence :#}
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        {#<span> {{ ParentData.telUrgence }} </span>#}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Accepte contact par SMS :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> <i class="fa {{ (ParentData.sendsms )? 'fa-check-square-o':'fa-square-o'  }}  fa-14 "></i> </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Accepte contact par mail :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> <i class="fa {{ (ParentData.sendmail )? 'fa-check-square-o':'fa-square-o'  }}  fa-14 "></i> </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Participe aux animations :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> <i class="fa {{ (ParentData.participeanim )? 'fa-check-square-o':'fa-square-o'  }}  fa-14 "></i> </span>
+                                    </td>
+                                    <td>
+                                        <strong>
+                                            <span class="fa fa-caret-right  text-primary"></span>
+                                            Accepte la prise de Photos :
+                                        </strong>
+                                    </td>
+                                    <td class="text-primary">
+                                        <span> <i class="fa {{ (ParentData.autorphoto )? 'fa-check-square-o':'fa-square-o'  }}  fa-14 "></i> </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

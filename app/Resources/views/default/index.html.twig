@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <style type="text/css">
+        body {
+            font: 18px/1.5 sans-serif!important;
+            height: auto;
+            width: auto;
+            background: #f4f4f4 url(" {{ asset('img/login-bg.jpg') }} ") no-repeat scroll center center / cover !important;
+            /*background-size: 1873px !important;*/
+            background-attachment: fixed !important;
+        }
+        .selecteSector{
+            text-align: center !important;
+        }
+        .btnimg{
+            background: rgba(248, 248, 248, 0.65);
+            border-radius: 50%;
+            -webkit-transition: all .4s ease-in;
+            -moz-transition: all .4s ease-in;
+            -o-transition: all .4s ease-in;
+            transition: all .4s ease-in;
+            animation-duration: .7s;
+        }
+        .btnimg:hover{
+             box-shadow: 0px 0px 19px -2px #bbedef;
+        }
+        #container01 , #wrapper01{
+            border-radius: 10px ;
+            background: #fff;
+            animation-duration: 2s;
+        }
+        #wrapper01{
+            border-bottom: 9px solid #8ed3ef;
+        }
+        .admin{
+            color: #8ed3ef;
+            text-decoration: underline !important;
+            margin: 10px 10px 5px 14px;
+        }
+        /* Medium devices (desktops, 992px and up) */
+        @media (max-width: 992px ){
+            /* login pages */
+            .selecteSector div {
+                padding: 31px;
+                text-align: center;
+            }
+            .logoHome img{
+                top: 56px!important;
+                left: 37%!important;
+                width: 269px!important;
+            }
+            #wrapper01{
+                width: 90%;
+            }
+            .btnimg{
+                width: 161px;
+            }
+        }
+        /* Small devices (tablets, 768px and up) */
+        @media (max-width: 768px ){
+            /* login pages */
+            .selecteSector div {
+                padding: 31px;
+                text-align: center;
+            }
+            .logoHome img{
+                top: 5px!important;
+                left: 39%!important;
+                width: 146px!important;
+            }
+            #wrapper01{
+                width: 90%;
+                margin-top: 35px;
+            }
+            .btnimg{
+                width: 161px;
+            }
+        }
+        /* Large devices (large desktops, 1200px and up) */
+        @media (min-width: 992px ) {
+            /* login pages */
+            .selecteSector div {
+                padding: 26px;
+                text-align: center;
+            }
+            #wrapper01{
+                width: 65%;
+            }
+            .btnimg{
+                width: 250px;
+            }
+        }
+        #feedback1 a img {
+            width: 250px;
+        }
+        #feedback1 a {
+            display: block;
+            position: fixed;
+            z-index: 998;
+            bottom: 0px;
+            left: 10px;
+        }
+    </style>
+    <div id="wrapper01" class="animated fadeIn">
+        <div id="container01" >
+            <a class="logoHome" href=" {{ path('homepage') }} ">
+                <img src="{{ asset('img/logo.png') }}" style="position: absolute;top: 31px;left: 39%;width: 399px;" >
+            </a>
+            <div class="row selecteSector">
+                <div class="parent">
+                    <a href="{{ path('fos_user_security_login') }}">
+                        <img class="btnimg animated rotateInDownLeft" src="{{ asset('img/parent.png') }}" >
+                    </a>
+                </div>
+                <div class="assmat">
+                    <a href=" {{ path('fos_user_security_login') }} ">
+                        <img class="btnimg animated rotateInDownRight" src="{{ asset('img/ass.png') }}">
+                    </a>
+                </div>
+            </div>
+        </div>
+        {#<a href="{{ path('fos_user_security_login') }} " class="admin"> <i class="fa fa-lock" ></i> </a>#}
+        <a style="font-size: 13px; text-decoration: none !important;" href="{{ path('fos_user_security_login') }} " class="admin"> <img class="animated rotateInDownRight" src="{{ asset('img/padlock.png') }}" style="width: 20px; margin-bottom: 7px;">Administrateur</a>
+        {#<div id="feedback1">#}
+            {#<a id="islpronto_link" onclick="window.open('https://server430.islonline.net/live/islpronto/start.html?_d=1&_s=1&lang=fr&location=http%3a%2f%2fgramweb.fr%2flogin&mobile=0&referrer=&template=d%3as6_0_924%7cc%3as6_0_330', 'newwindow', 'width=300,height=250'); return false;">#}
+                {#<img id="islpronto_image" alt="Live chat" src="{{ asset('img/en_ligne.png') }}" style="border:none">#}
+            {#</a>#}
+        {#</div>#}
+    </div>
+{% endblock %}

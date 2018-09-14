@@ -1,0 +1,117 @@
+{% extends 'assmatpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Accueil
+            </h2>
+            <div class="panlecontainer">
+                <div class="dashboard">
+                    <div class="static">
+                        <div class="enfants col-lg-12 col-md-12 col-sm-12" style="margin-top: -30px;margin-bottom: -30px;">
+                            <div class="panel panel-success">
+                                <div class="panel-heading">
+                                    <a href="{{ path('all_enfants') }}">
+                                       Les Enfants: <span style="color: #0f6e8a ;text-shadow: 0 0px 0.1px #5a5a5a;">Mes Enfants</span> <span>&</span> <span style="color: #1aa382 ;0 0px 0.1px #060606;">Enfants Accueillis </span>
+                                    </a>
+                                </div>
+                                <div class="panel-body col-lg-12 col-md-12 col-sm-12">
+                                    {% for enfant in static.Enfants %}
+                                        <div class="enfant col-lg-3 col-md-3 col-sm-3" data-toggle="tooltip" data-placement="top" title="{{ enfant.dateNaissance != '' ? enfant.dateNaissance|date("d/m/Y") :'' }}">
+                                            <a href="{{ path('mes_enfants')}}"> <i class="fa fa-user"></i>{{ enfant.nom }} {{ enfant.prenom }}</a>
+                                        </div>
+                                    {% endfor %}
+                                    {% for enf in static.EnfantsAcceuils %}
+                                        <div class="enfant col-lg-3 col-md-3 col-sm-3" data-toggle="tooltip" data-placement="top" title="{{  enf.enfant.dateNaissance != ''? enf.enfant.dateNaissance|date("d/m/Y"):'' }}">
+                                            <a href="{{ path('enfants_acceuils') }}" class="enfantAcc"> <i class="fa fa-user"></i>{{ enf.enfant.nom }} {{ enf.enfant.prenom }}</a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="latest">
+                    {% if( parameters.4.dispaly ) %}
+                        <div class="col-lg-4 col-md-4 col-sm-4">
+                            <div class="panel panel-primary">
+                                <div class="panel-heading">
+                                    <a href="{{ path('assmat_agenda') }}" title="Les Temps collectifs d'Aujourd'hui">
+                                        Temps collectifs : {{ "now"|date("m/d/Y") }}
+                                    </a>
+                                </div>
+                                <div class="panel-body thisDayTemp">
+                                    <a href=" {{ path('assmat_agenda') }}"
+                                       class="day-number">{{ "now"|date("d") }}</a>
+                                    {% if static.tempC  is not empty %}
+                                        {% for t in static.tempC %}
+                                            {% set lieu = t.lieu != "" ? t.lieu : t.tclieu.tclieu %}
+                                            <a class="fc-day-grid-event fc-h-event fc-event fc-start fc-end" href="{{ path('assmat_agenda') }}"  data-toggle="tooltip" data-placement="top" title="{{ lieu }}" >
+                                                <div class="fc-content" >
+                                                    <span class="fc-time">{{ t.hDeb }}</span>
+                                                    <span class="fc-title" >{{ t.nom }} </span>
+                                                    <span class="fc-time">{{ t.hFin }}</span>
+                                                </div>
+                                            </a>
+                                        {% endfor %}
+                                    {% else %}
+                                        <style>.day-number{font-size: 71px !important;top: 17px!important;left: 50px!important; display: block}</style>
+                                        <span style="color: #989898;left: 22px;position: relative;top: 22px;">Aucune Temp Collectif</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if( parameters.7.dispaly ) %}
+                        <div class="{% if( parameters.4.dispaly ) %} col-lg-8 col-md-8 col-sm-8 {% else %}  col-lg-12 col-md-12 col-sm-12 {% endif %}">
+                            <div class="panel panel-primary ">
+                                <div class="panel-heading">
+                                    <a href="{{ path('amtelechargement') }}">
+                                        Documents
+                                    </a>
+                                </div>
+                                <div class="panel-body Docs">
+                                    <table id="DownlondTable_id"  class="table table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Titre</th>
+                                            <th>Extension</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for document in static.documents %}
+                                            <tr>
+                                                <td>{{ document.id }}</td>
+                                                <td>{{ document.title| truncate(20, false) }}</td>
+                                                <td>{{ document.filetype }}</td>
+                                                <td>
+                                                    <a  href="{{ asset('uploads/documents/'~document.name ) }}" download class="btnactions">
+                                                        <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Télécharger">
+                                                            <i class="fa fa-square-o fa-stack-2x"></i>
+                                                            <i class="fa fa-download fa-stack-1x"></i>
+                                                        </span>
+                                                    </a>
+                                                    <a href="{{ asset('uploads/documents/'~document.name ) }}" target="_blank" class="btnactions">
+                                                        <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Aperçu">
+                                                            <i class="fa fa-square-o fa-stack-2x"></i>
+                                                            <i class="fa fa-eye fa-stack-1x"></i>
+                                                        </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

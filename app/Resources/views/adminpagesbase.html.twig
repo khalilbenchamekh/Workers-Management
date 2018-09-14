@@ -1,0 +1,253 @@
+{% extends 'base.html.twig' %}
+{% set crntRoute =  app.request.attributes.get('_route') %}
+{% set usertype =  app.request.attributes.get('userType') %}
+{% set msgs =  app.session.flashbag.get('msgs') %}
+{% set error =  app.session.flashbag.get('error') %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/tagsinput.css') }}" />
+{% endblock %}
+{% block body %}
+	<script>
+        var assetsBaseDirImgs = "{{ asset('img/') }}"
+	</script>
+	<style>
+		body {
+			height: auto;
+			width: auto;
+			background: #f4f4f4 url({{ asset('img/newbackground.jpg') }} ) no-repeat scroll center  !important;
+			background-size: 100% !important;
+			background-position: 0px -165px !important;
+			background-attachment: fixed !important;
+		}
+		{#body {#}
+			{#height: auto;#}
+			{#width: auto;#}
+			{#background: #f4f4f4 url({{ asset('img/newbackground.jpg') }}) !important;#}
+			{#background-size: 27% !important;#}
+			{#/* background-position: 0px -165px !important; */#}
+			{#/* background-attachment: fixed !important; */#}
+			{#background-repeat: repeat;#}
+		{#}#}
+		.btnRapporter{
+			position: absolute;
+			z-index: 99;
+			left: -13px;
+			top: 308px;
+			background-image: url({{ asset('img/bucktracker.png') }});
+			width: 291px;
+			height: 125px;
+			background-size: 302px;
+			background-color: transparent;
+			border: none;
+		}
+	</style>
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    <div id="wrapper">
+	    <div class="containertop">
+			{% block top %}
+				<div class="modal animated bounceIn" id="modal_update_enfam"  role="dialog" >
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+							</div>
+							<div class="modaleContant" id="modaleContant">
+								<div class="modal-body"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal animated bounceIn" id="modal_doc_acces"  role="dialog" >
+					<div class="modal-dialog " role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Chargement ... </h4>
+							</div>
+							<div class="modaleContant" id="modaleContant">
+								<div class="modal-body">
+									{#<div class="loader animated fadeIn"> <img src="{{ asset('img/default.gif') }}" alt="loader"> </div>#}
+									<div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color: #ee5d16;"></i></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+                {#<div style="width: 100%;height: 160px;">#}
+                	{#<img src="{{ asset('img/header.png') }}" >#}
+                {#</div>#}
+                {% if msgs is not empty %}
+					<div id="MsgsAlerts" class="MsgsAlerts alert alert-success alert-dismissible animated fadeInUp" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {% for flashMessage in msgs %}
+                            {{ flashMessage }}
+                        {% endfor %}
+					</div>
+                {% endif %}
+				{% if error is not empty %}
+					<div id="MsgsAlerts" class="MsgsAlerts errorAlerts alert alert-danger alert-dismissible animated fadeInUp" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {% for flashMessage in error %}
+                            {{ flashMessage }}
+                        {% endfor %}
+					</div>
+                {% endif %}
+			{% endblock %}
+		</div>
+        <div class="container" style="margin-top: 10px ;width: 100%;">
+        	<div class="main"  >
+				<div style="background: rgba(255, 255, 255, 0.85);" class="menu col-lg-3 col-md-3">
+					<a href="{{ path('Admin') }}">
+						<img src="{{ asset('img/logoadmin.png') }}" class="logoType"></a>
+					{% block Menu %}
+						<ul class="list-group" >
+							<li class="head" >
+								<a href="{{ path('Admin') }}"> 
+									Bienvenue, [{{app.user.username}}]
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item {{ (crntRoute == 'Admin') ? 'activepage':''  }} " href="{{ path('Admin') }}"> 
+									<p class="ptach" style="padding: 14px 5px 14px 8px;">
+										<span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-home fa-stack-1x"></i>
+										</span>
+									</p>
+									<span class="cnt">Accueil</span>
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item {{ (crntRoute == 'Admin_Para') ? 'activepage':''  }} " href="{{ path('Admin_Para') }}"> 
+									<p class="ptach" style="padding: 14px 5px 14px 8px;">
+										<span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-sliders fa-stack-2x"></i> -->
+	  									<i class="fa fa-cogs fa-stack-1x"></i>
+										</span>
+									</p>
+									<span class="cnt">Paramétrage</span>
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item {{ (crntRoute == 'admin_users' or crntRoute == 'user_paraassmat' or crntRoute == 'user_paraparent') ? 'activepage':''  }} " href="{{ path('admin_users', {'userType': 'all'} ) }}">
+									<p class="ptach" style="padding: 14px 5px 14px 8px;">
+										<span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-users fa-stack-1x"></i>
+										</span>
+									</p>
+									<span class="cnt">Gestion des utilisateurs</span>
+								</a>
+								<div class="somenu animated slideInLeft" style="top:152px"> <!--  fadeInLeft ; fadeInDown  -->
+									<div class="arrow-up"></div>
+									<ul class="list-group">
+										<li>
+											<a class="list-group-item {{ (usertype == 'parent' or crntRoute == 'user_paraparent' ) ? 'activepage':'' }}" href="{{ path('admin_users', {'userType': 'parent'} ) }}">
+												<span class="fa-stack fa-lg">
+				 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+				  									<i class="fa fa-user fa-stack-1x"></i>
+												</span>
+												<span class="cnt">Parents</span>
+											</a>
+										</li>
+										<li>
+											<a class="list-group-item {{ (usertype == 'assmat' or crntRoute == 'user_paraassmat' ) ? 'activepage':'' }}" href="{{ path('admin_users', {'userType': 'assmat'} )}}">
+												<span class="fa-stack fa-lg">
+				 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+				  									<i class="fa fa-user fa-stack-1x"></i>
+												</span>
+												<span class="cnt">Assmats</span>
+											</a>
+										</li>
+										<li>
+											<a class="list-group-item {{ (usertype == 'part') ? 'activepage':'' }}" href="{{ path('admin_users', {'userType': 'part'} )}}"> 
+												<span class="fa-stack fa-lg">
+				 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+				  									<i class="fa fa-user fa-stack-1x"></i>
+												</span>
+												<span class="cnt">Partenaires </span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</li>
+							<li>
+                                {% set docRoutres = ["document_index", "document_new","document_show", "document_edit"] %}
+								<a class="list-group-item {{ ( crntRoute in docRoutres ) ? 'activepage':''  }} " href="{{ path('document_index') }}">
+									<p class="ptach" style="padding: 14px 5px 14px 8px;">
+										<span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-files-o fa-stack-1x"></i>
+										</span>
+									</p>
+									<span class="cnt">Gestion des documents</span>
+								</a>
+							</li>
+							<li>
+                                {% set docRoutres = ["document_index", "document_new","document_show", "document_edit"] %}
+								<a class="list-group-item {{ ( crntRoute in docRoutres ) ? 'activepage':''  }} " href="{{ path('document_index') }}">
+									<p class="ptach" style="padding: 14px 5px 14px 8px;">
+										<span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-wrench fa-stack-1x"></i>
+										</span>
+									</p>
+									<span class="cnt">Configuration</span>
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item" href="{{ path('fos_user_security_logout') }} ">
+									<p class="ptach" style="padding: 14px 5px 14px 8px;">
+										<span class="fa-stack fa-lg">
+	 							 			<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  										<i class="fa fa-times fa-stack-1x"></i>
+										</span>
+									</p>
+									<span class="cnt">Déconnexion</span>
+								</a>
+							</li>
+						</ul>
+					{% endblock %}
+				</div>
+				<div class="rapportbogus" >
+                    {% set currentPath = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+					<form id="login-form" method="POST" action="http://46.227.22.66/ligermantisbt/redirect.php" target="_blank">
+						<input type="hidden" name="return" value="bug_report_page.php">
+						<input type="hidden" name="bogue_url" value="{{ app.request.uri }}">
+						<input type="hidden" name="username" value="user-Portail-Pro-Demo">
+						<input id="password" name="password" type="hidden" value="TOR00ZPH38aF2rWh">
+						<input type="submit" class="btnRapporter" value="">
+					</form>
+				</div>
+				<div style="background: rgba(255, 255, 255, 0.85);" class="pageContainer col-lg-9 col-md-9 animated fadeIn">
+					{% block pageContainer %}
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing
+						</p>
+					{% endblock %}
+				</div>	 
+			</div>
+			{#<div class="clearfix"></div>#}
+			<!-- <div class="footre col-lg-9 col-md-9">
+				block footre 
+					<footer>
+						<p>texte du footer</p>
+					</footer>
+				endblock 
+			</div>	  -->      
+        </div>
+    </div>
+
+    {% else %}
+	    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+	{% endif %}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	 <script src="{{ asset('js/admin.js') }}"></script>
+	 <script src="{{ asset('js/tagsinput.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>informations de <small style="color: #fff;"> [ {{  Enfant.prenom  }} ] </small>
+            </h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        <a class="btn btn-default btn-xs" href="{{ path('enfants') }}">
+                            <i class=" fa fa-list" data-toggle="tooltip" data-placement="top" title="Afficher la liste"></i>
+                        </a>
+                        {% if parameters.3.allowUpdate %}
+                            <a class="btn btn-primary btn-xs" href=" {{ path('edit_enfant' , { 'id' : Enfant.id}) }} "> <i class=" fa fa-edit"></i> Modifier </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-12 ">
+                    <div class="table-responsive">
+                        <table class="table table-condensed table-responsive table-user-information">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="fa fa-caret-right  text-primary"></span>
+                                        Nom :
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span> {{ Enfant.nom }} </span>
+                                </td>
+                                <td>
+                                    <strong>
+                                        <span class="fa fa-caret-right  text-primary"></span>
+                                        Prénom :
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span> {{ Enfant.prenom }} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="fa fa-caret-right  text-primary"></span>
+                                        Age :
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span> {{ 'now'|date('Y') - Enfant.dateNaissance|date('Y') + ('now'|date('2017-m-d')|date('U') - Enfant.dateNaissance|date('2017-m-d')|date('U') >= 0 ? 1 : 0 ) }} </span>
+                                </td>
+                                <td>
+                                    <strong>
+                                        <span class="fa fa-caret-right  text-primary"></span>
+                                        Date de naissance :
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span> {{ Enfant.dateNaissance|date("d/m/Y") }} </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span class="fa fa-caret-right  text-primary"></span>
+                                        Date de debut d'accueil souhaité
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    <span> {{ Enfant.dateDebutAccueilSouhaite|date("d/m/Y") }} </span>
+                                </td>
+                                <td>
+                                    <strong>
+                                        <span class="fa fa-caret-right  text-primary"></span>
+                                        Lieu de scolarisation:
+                                    </strong>
+                                </td>
+                                <td class="text-primary">
+                                    {#<span>  {{  Enfant.lieuscolarisation.lieuscolarisation  }} </span>#}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {% if parameters.4.dispaly %}
+                <div class="enfacc">
+                    <strong><span class="fa fa-caret-right  text-primary"></span>
+                        {% if EnfantsAm|length == 0 %}
+                            Aucune AM accueillants cet enfant </strong>
+                        {% else %}
+                            les AM accueillants cet enfant <small>[{{ EnfantsAm|length }}]</small></strong>
+                            <table  class="table table-striped table-hover" style="margin-top: 6px;">
+                                <thead>
+                                <tr style= "background: #EC5910;color: #fff;">
+                                    <th>Nom AM</th>
+                                    <th>Prénom AM</th>
+                                    <th>Date de début</th>
+                                    <th>Date de fin</th>
+                                    <th>Detail</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for enfAcc in EnfantsAm %}
+                                    <tr>
+                                        <th scope="row">{{ enfAcc.agrement.assmat.nomNaissance }}</th>
+                                        <td>{{ enfAcc.agrement.assmat.prenomNaissance }}</td>
+                                        <td>{{ enfAcc.dateDebutAcceuil|date('d/m/Y') }}</td>
+                                        <td>{{ enfAcc.dateFinAcceuil|date("d/m/Y") }}</td>
+                                        <td>{{ enfAcc.commentaire }}</td>
+                                        <td>
+                                            {% if parameters.4.allowUpdate %}
+                                                <a href="{{ path('edit_enf_am' , { 'id' : enfAcc.id} ) }}" class="btnactions" >{#type="button" data-enamid="{{ enfAcc.id }}" data-toggle="modal" data-target="#modal_update_enfam"#}
+                                                    <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Modifier" >
+                                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                                        <i class="fa fa-pencil fa-stack-1x"></i>
+                                                    </span>
+                                                </a>
+                                            {% endif %}
+                                            {% if parameters.4.allowDelete %}
+                                                <a href="#" class="btnactions"  type="button" data-enamid="{{ enfAcc.id }}" data-todo="Suppression" data-toggle="modal" data-target="#modal_update_enfam" >
+                                                    <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Supprimer">
+                                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                                        <i class="fa fa-close fa-stack-1x"></i>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="btnactions" type="button" data-enamid="{{ enfAcc.id }}" data-todo="Fin Contrat" data-toggle="modal" data-target="#modal_update_enfam"  >
+                                                    <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Fin Contrat">
+                                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                                        <i class="fa fa-stop fa-stack-1x"></i>
+                                                    </span>
+                                                </a>
+                                            {% endif %}
+                                            <a href="#" class="btnactions" type="button" data-enamid="{{ enfAcc.agrement.assmat.id }}"
+                                               data-amnom="{{ enfAcc.agrement.assmat.nomNaissance ~" "~  enfAcc.agrement.assmat.prenomNaissance }}"
+                                               data-todo="getamagenda" data-toggle="modal" data-target="#modal_update_enfam">
+                                                <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Agenda de {{ enfAcc.agrement.assmat.nomNaissance }}">
+                                                    <i class="fa fa-square-o fa-stack-2x"></i>
+                                                    <i class="fa fa-calendar fa-stack-1x"></i>
+                                                </span>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

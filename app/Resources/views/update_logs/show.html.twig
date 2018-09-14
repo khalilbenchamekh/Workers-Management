@@ -1,0 +1,157 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block pageContainer %}
+<div class="myrow">
+    <div class="contenu_fieldset" style="display: block;">
+        <h2 class="panleHead">
+            <span>| &nbsp; </span>Afichier les information de la modification</h2>
+        <div class="panlecontainer">
+            <div class="panleContainerHead">
+                <div class="clearfix col-lg-6 updateinfo">
+                    <a  class="btn btn-default btn-xs" href="{{ path('Admin_Logs_index') }}"><i class=" fa fa-list"></i> Retour à la liste </a>
+                    {% if update_log.statu !='valide' %}
+                        <a class="btn btn-success btn-xs" href="{{ path('Admin_Logs_valide', { 'id': update_log.id }) }}"> <i class="fa fa-check"></i> Valider</a>
+                    {% endif %}
+                    <a  class="btn btn-info btn-xs" href="{{ path('Admin_Logs_edit', { 'id': update_log.id }) }}"> <i class="fa fa-edit"></i> Editer </a>
+                    <div class="deletforme">
+                        {{ form_start(delete_form) }}
+                            <button class="btn btn-danger btn-xs" id="deleteupdatelog" type="submit" ><i class='fa fa-close'></i> Supprimer</button>
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 userinfo">
+                <div class="table-responsive">
+                    <table class="table table-condensed table-responsive table-user-information">
+                        <tbody>
+                        {#
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-user text-primary"></span>
+                                    Identificacion
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                #{{ update_log.id }}
+                            </td>
+                        </tr>
+                        #}
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right text-primary"></span>
+                                    Nom de Table
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log.tableName }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right text-primary"></span>
+                                    Nom de champ
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log.champName }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right text-primary"></span>
+                                    Nouvelle valeur
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log.value }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right text-primary"></span>
+                                    Statut
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                <i class="fa {{ update_log.statu != 'nonvalide' ? 'fa-check-square-o':'fa-square-o'  }}  fa-14 "
+                                   title="{{ update_log.statu != 'nonvalide' ? 'Valide':'Non valide'  }}"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right text-primary"></span>
+                                    Commentaire
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log.commante }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-user text-primary"></span>
+                                    Identification dans le portail pro
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                #{{ update_log.UserId }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-user text-primary"></span>
+                                    Type d'utilisateur
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log.UserType }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-user text-primary"></span>
+                                    Identification dans Gramweb
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                #{{ update_log.userGwId }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-calendar-times-o text-primary"></span>
+                                    créé le
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log.insertDate|date('d-m-y') }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-calendar-check-o text-primary"></span>
+                                    Modifié le
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {{ update_log != null ? update_log.updateDate|date('d-m-y') : " - - " }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

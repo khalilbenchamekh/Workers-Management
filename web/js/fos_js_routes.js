@@ -1,0 +1,1 @@
+fos.Router.setData({"base_url":"","routes":{"editPassword":{"tokens":[["variable","\/","[^\/]++","id"],["text","\/Admin\/editPassword"]],"defaults":[],"requirements":[],"hosttokens":[]},"edit_enf_am":{"tokens":[["variable","\/","[^\/]++","id"],["text","\/Parent\/EnfantAm"]],"defaults":[],"requirements":[],"hosttokens":[]}},"prefix":"","host":"localhost","scheme":"http"});

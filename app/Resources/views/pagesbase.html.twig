@@ -1,0 +1,272 @@
+{% extends 'base.html.twig' %}
+{% set crntRoute =  app.request.attributes.get('_route') %}
+{% set msgs =  app.session.flashbag.get('msgs') %}
+{% set responams =  parent_generator.getResposNams(app.user.p_a_pt_id) %}
+{% set parameters = app.user.listparams != null ? app.user.listparams.parameters : app.user.parameters  %}
+{% block stylesheets %}
+    {{ parent() }}
+	<link rel="stylesheet" href="{{ asset('css/admin.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/bootstrap-datepicker.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/fullcalendar.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/qtip.min.css') }}" />
+{% endblock %}
+
+{% block body %}
+	<script>
+        var assetsBaseDirImgs = "{{ asset('img/') }}"
+	</script>
+	<style>
+		body {
+			{#height: auto;#}
+			{#width: auto;#}
+			{#background: #f4f4f4 url({{ asset('img/newbackground.jpg') }}) !important;#}
+			{#background-size: 27% !important;#}
+			{#background-repeat: repeat;#}
+
+			height: auto;
+			width: auto;
+			background: #f4f4f4 url({{ asset('img/newbackground.jpg') }} ) no-repeat scroll center  !important;
+			background-size: 100% !important;
+			background-position: 0px -165px !important;
+			background-attachment: fixed !important;
+		}
+		.filter_gradain {
+			height: 100%;
+			width: 100%;
+			background: rgba(0, 0, 0, 0.14);
+			position: absolute;
+		}
+		.btnRapporter{
+			position: absolute;
+			z-index: 99;
+			left: -22px;
+			top: 360px;
+			background-image: url("{{ asset('img/bucktracker.png') }}");
+			width: 278px;
+			height: 127px;
+			background-size: 281px;
+			background-color: transparent;
+			border: none;
+		}
+	</style>
+	{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+	<div id="wrapper">
+		<div class="containertop">
+			{% block top %}
+				<div class="filter_gradain"></div>
+				<div class="modal animated bounceIn" id="modal_update_enfam"  role="dialog" >
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+							</div>
+							<div class="modaleContant" id="modaleContant">
+								<div class="modal-body">
+
+								</div>
+								{#<div class="modal-footer">#}
+									{#<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>#}
+									{#<button type="button" class="btn btn-primary">Save changes</button>#}
+								{#</div>#}
+							</div>
+						</div>
+					</div>
+				</div>
+				{#<div style="width: 100%;height: 160px;">#}
+					{#<img src="{{ asset('img/header.png') }}" >#}
+				{#</div>#}
+                {% if msgs is not empty %}
+					<div id="MsgsAlerts" class="MsgsAlerts alert alert-success alert-dismissible animated fadeInUp" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        {% for flashMessage in msgs %}
+							<span>{{ flashMessage|raw }}</span> <br>
+                        {% endfor %}
+					</div>
+                {% endif %}
+			{% endblock %}
+		</div>
+        <div class="container" style="margin-top: 10px ;width: 1060px;">	
+        	<div class="main">
+				<div style="background: rgba(255, 255, 255, 0.85);" class="menu col-lg-3 col-md-3">
+					<a href="{{ path('accueil') }}"><img src="{{ asset('img/logo.png') }}" class="logoType"></a>
+					{% block Menu %}
+						<ul class="list-group">
+							<li class="head" >
+								<a href="{{ path('accueil') }}">
+									{% set nom = (responams.nam1 != "") ? responams.nam1 : (responams.nam2 != "") ? responams.nam2 :"." %}
+									Bienvenue, <small>[ {{ nom|truncate(12, false, '...') }} ]</small>
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item {{ (crntRoute == 'famhome') ? 'activepage':''  }} " href="{{ path('famhome') }}">
+									<p class="ptach"><span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-home fa-stack-1x"></i>
+									</span></p>
+									<span class="cnt">Accueil</span>
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item {{ (crntRoute == 'accueil') ? 'activepage':''  }} " href="{{ path('accueil') }}">
+									<p class="ptach"><span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-info fa-stack-1x"></i>
+									</span></p>
+									<span class="cnt">Informations générales</span>
+								</a>
+							</li>
+							<li>
+								<a class="list-group-item
+									{{ ( crntRoute == 'resp1' or crntRoute == 'resp2' or crntRoute == 'enfants'
+										or crntRoute == 'editResp1' or crntRoute == 'editResp2' or crntRoute == 'edit_enfant'
+										or crntRoute == 'show_enfant') ? 'activepage':''  }}
+										" href="{{ path('ficheFamille')
+									}}">
+									<p class="ptach"><span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-users fa-stack-1x"></i>
+									</span></p>
+									<span class="cnt">Fiche Famille</span>
+								</a>
+								{% if parameters.1.dispaly  and parameters.2.dispaly and parameters.3.dispaly %}
+									<div class="somenu animated slideInLeft" style="top: 150px"> <!--  fadeInLeft ; fadeInDown  -->
+										<div class="arrow-up"></div>
+										<ul class="list-group">
+											{% if parameters.1.dispaly %}
+												<li>
+													<a class="list-group-item {{ (crntRoute == 'resp1' or crntRoute == 'editResp1' ) ? 'activepage':'' }}" href="{{ path('resp1') }}"
+														data-toggle="tooltip" title="Responsable 1">
+														<span class="fa-stack fa-lg">
+															<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+															<i class="fa fa-user fa-stack-1x"></i>
+														</span>
+														<span class="cnt">{{ ( responams.nam1 != "" ? responams.nam1 : "" )~' '~ ( responams.pre1 != "" ? responams.pre1 : "" ) }}</span>
+													</a>
+												</li>
+											{% endif %}
+											{% if parameters.2.dispaly %}
+												<li>
+													<a class="list-group-item {{ (crntRoute == 'resp2' or crntRoute == 'editResp2') ? 'activepage':'' }}" href="{{ path('resp2') }}"
+													   data-toggle="tooltip" title="Responsable 2" >
+														<span class="fa-stack fa-lg">
+															<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+															<i class="fa fa-user fa-stack-1x"></i>
+														</span>
+														<span class="cnt">{{ ( responams.nam2 != "" ? responams.nam2 : "" )~' '~ ( responams.pre2 != "" ? responams.pre2 : "" ) }} </span>
+													</a>
+												</li>
+											{% endif %}
+											{% if parameters.3.dispaly %}
+												<li>
+													<a class="list-group-item {{ (crntRoute == 'enfants' or crntRoute == 'edit_enfant' or crntRoute == 'show_enfant') ? 'activepage':'' }}" href="{{ path('enfants') }}">
+														<span class="fa-stack fa-lg">
+															<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+															<i class="fa fa-user-md fa-stack-1x"></i>
+														</span>
+														<span class="cnt">Enfants</span>
+													</a>
+												</li>
+											{% endif %}
+										</ul>
+									</div>
+                                {% endif %}
+							</li>
+							<li>
+
+								<a class="list-group-item {{ (crntRoute == 'agenda_all' or crntRoute == 'agenda_action' or crntRoute == 'my_sin_ins') ? 'activepage':''  }}" {% if parameters.5.dispaly %}  href="{{ path('agenda_all') }}" {% endif %}>
+									<p class="ptach"><span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-clock-o fa-stack-1x"></i>
+									</span></p>
+									<span class="cnt">Temps Collectifs</span>
+								</a>
+								<div class="somenu animated slideInLeft" style="top: 197px; "> <!--  fadeInLeft ; fadeInDown  -->
+									<div class="arrow-up"></div>
+									<ul class="list-group" style="width: 252px;">
+                                        {% if parameters.5.dispaly %}
+											<li>
+												<a class="list-group-item {{ (crntRoute == 'agenda_all'  or crntRoute == 'agenda_action' ) ? 'activepage':''  }}" href="{{ path('agenda_all') }}">
+													<span class="fa-stack fa-lg">
+														<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+														<i class="fa fa-calendar fa-stack-1x"></i>
+													</span>
+													<span class="cnt">Agenda des temps collectifs</span>
+												</a>
+											</li>
+										{% endif %}
+                                        {% if parameters.7.dispaly %}
+											<li>
+												<a class="list-group-item {{ (crntRoute == 'my_sin_ins') ? 'activepage':''  }} " href="{{ path('my_sin_ins') }}">
+													<span class="fa-stack fa-lg">
+														<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+														<i class="fa fa-calendar-check-o fa-stack-1x"></i>
+													</span>
+													<span class="cnt">Mes inscriptions</span>
+												</a>
+											</li>
+										{% endif %}
+									</ul>
+								</div>
+							</li>
+                            {% if parameters.8.dispaly %}
+								<li>
+									<a class="list-group-item {{ ( crntRoute == 'telechargement') ? 'activepage':'' }}" href="{{ path('telechargement' ) }}">
+										<p class="ptach"><span class="fa-stack fa-lg">
+											<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+											<i class="fa fa-download fa-stack-1x"></i>
+										</span></p>
+									<span class="cnt">Téléchargement</span>
+									</a>
+								</li>
+							{% endif %}
+							<li>
+								<a class="list-group-item" href="{{ path('fos_user_security_logout') }} ">
+									<p class="ptach"><span class="fa-stack fa-lg">
+	 							 		<!-- <i class="fa fa-square-o fa-stack-2x"></i> -->
+	  									<i class="fa fa-times fa-stack-1x"></i>
+									</span></p>
+									<span class="cnt">Déconnexion</span>
+								</a>
+							</li>
+						</ul>
+					{% endblock %}
+				</div>
+				<div class="rapportbogus" >
+					<form id="login-form" method="post" action="http://46.227.22.66/ligermantisbt/login.php" target="_blank">
+						<input type="hidden" name="return" value="login_select_proj_page.php?ref=bug_report_page.php">
+						<input type="hidden" name="username" value="PortailPro01">
+						<input id="password" name="password" type="hidden" value="liger69*">
+						<input type="submit" value="" class="btnRapporter">
+					</form>
+				</div>
+				<div style="background: rgba(255, 255, 255, 0.85);" class="pageContainer col-lg-9 col-md-9 animated fadeIn">
+					{% block pageContainer %}
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing
+						</p>
+					{% endblock %}
+				</div>	 
+			</div>
+			{#<div class="clearfix"></div>#}
+			<!-- <div class="footre col-lg-9 col-md-9">
+				block footre 
+					<footer>
+						<p>texte du footer</p>
+					</footer>
+				endblock 
+			</div>	  -->      
+        </div>
+	</div>
+    {% else %}
+	    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+	{% endif %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+	<script src="{{ asset('js/moment.min.js') }}"></script>
+	<script src="{{ asset('js/fullcalendar.js') }}"></script>
+	<script src="{{ asset('js/agendaLocal_fr.js') }}"></script>
+	<script src="{{ asset('js/qtip.min.js') }}"></script>
+	<script src="{{ asset('js/parent.js') }}"></script>
+{% endblock %}

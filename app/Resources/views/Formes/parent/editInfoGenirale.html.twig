@@ -1,0 +1,90 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Modifier Informations Générales</h2>
+            <div class="panlecontainer panleEdit">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">  
+                        <a class="btn btn-default btn-xs go_Back"> <i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  </a>
+                        <a class="btn btn-primary  btn-xs" id="saveInfoGeniParent"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                {{ form_start(ParentForm , {'attr': {'id': 'appbundle_gwparent_edit'}}) }}
+                    {#<div>#}
+                        {#{{ form_label(ParentForm.numFiche, 'N° de la fiche :', {'label_attr': {'class': 'foo'}}) }}#}
+                        {#{{ form_errors(ParentForm.numFiche) }}#}
+                        {#{{ form_widget(ParentForm.numFiche , { 'attr': { 'class' : 'form-control' } } ) }}#}
+                    {#</div>#}
+                    <div>
+                        {{ form_label(ParentForm.situationFamille, 'Situation famille :') }}
+                        {{ form_errors(ParentForm.situationFamille) }}
+                        {{ form_widget(ParentForm.situationFamille , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.statutparent, 'Statut de la recherche Famille :') }}
+                        {{ form_errors(ParentForm.statutparent) }}
+                        {{ form_widget(ParentForm.statutparent , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.relais, 'Relais :') }}
+                        {{ form_errors(ParentForm.relais) }}
+                        {{ form_widget(ParentForm.relais , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.sendsms, 'Accepte contact par SMS:') }}
+                        {{ form_errors(ParentForm.sendsms) }}
+                        <div class="slideThree">
+                            {{ form_widget(ParentForm.sendsms , { 'attr': {'class' : 'activatecheck' } } ) }}
+                            <label for="appbundle_gwparent_sendsms"></label>
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.sendmail, 'Accepte contact par mail :') }}
+                        {{ form_errors(ParentForm.sendmail) }}
+                        <div class="slideThree">
+                            {{ form_widget(ParentForm.sendmail , { 'attr': { 'class' : 'activatecheck' } } ) }}
+                            <label for="appbundle_gwparent_sendmail"></label>
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.autorphoto, 'Accepte la prise de Photos :') }}
+                        {{ form_errors(ParentForm.autorphoto) }}
+                        <div class="slideThree">
+                            {{ form_widget(ParentForm.autorphoto , { 'attr': { 'class' : 'activatecheck' } } ) }}
+                            <label for="appbundle_gwparent_autorphoto"></label>
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.participeanim, 'Participe aux Animations :') }}
+                        {{ form_errors(ParentForm.participeanim) }}
+                        <div class="slideThree">
+                            {{ form_widget(ParentForm.participeanim , { 'attr': { 'class' : 'activatecheck' } } ) }}
+                            <label for="appbundle_gwparent_participeanim"></label>
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.emailEnvoi, "Adresse mail principale :") }}
+                        {{ form_errors(ParentForm.emailEnvoi) }}
+                        {{ form_widget(ParentForm.emailEnvoi , { 'attr': { 'class' : 'form-control' } }  ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.telUrgence, 'Téléphone Urgence :') }}
+                        {{ form_errors(ParentForm.telUrgence) }}
+                        {{ form_widget(ParentForm.telUrgence , { 'attr': { 'class' : 'form-control' } }  ) }}
+                    </div>
+                    <div>
+                        {{ form_label(ParentForm.telEnvoi, 'Téléphone :') }}
+                        {{ form_errors(ParentForm.telEnvoi) }}
+                        {{ form_widget(ParentForm.telEnvoi , { 'attr': { 'class' : 'form-control' } }  ) }}
+                    </div>
+                {{ form_end(ParentForm)}}
+            </div>
+            <script >
+
+            </script>
+        </div>
+    </div>
+{% endblock %}

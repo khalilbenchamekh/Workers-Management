@@ -1,0 +1,40 @@
+# To get started with security, check out the documentation:
+# http://symfony.com/doc/current/security.html
+security:
+    encoders:
+        FOS\UserBundle\Model\UserInterface: bcrypt
+
+    role_hierarchy:
+        #ROLE_SUPER_ADMIN: ROLE_USER
+        ROLE_ADMIN: [ROLE_ADMIN]
+        ROLE_PARENT: ROLE_PARENT
+        ROLE_ASSMAT: ROLE_ASSMAT
+        ROLE_PART: ROLE_PART
+    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded , ROLE_PARENT,ROLE_ASSMAT
+    providers:
+        fos_userbundle:
+            id: fos_user.user_provider.username_email
+
+    firewalls:
+        main:
+            pattern: ^/
+            form_login:
+                provider: fos_userbundle
+#                to get login from gramweb i have enebled the csrf token ;====<<<<<<<<<<<<<<<
+#                csrf_token_generator: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                default_target_path: /
+                login_path: /login
+            logout:
+                path:   /logout
+                target: /
+            anonymous:    true
+    access_control:
+        - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/Admin/, role: ROLE_ADMIN }
+        - { path: ^/Parent/, role: ROLE_PARENT }
+        - { path: ^/Assmat/, role: ROLE_ASSMAT }
+        - { path: ^/Part/, role: ROLE_PART }
+        - { path: ^/Services/, role: [ROLE_ADMIN,ROLE_PARENT,ROLE_ASSMAT,ROLE_PART] , methods: [POST, PUT]  }
+    access_denied_url: /

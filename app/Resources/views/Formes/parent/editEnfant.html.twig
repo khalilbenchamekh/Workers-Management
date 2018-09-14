@@ -1,0 +1,45 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Modifier informations de [ {{ enfantname }} ]</h2>
+            <div class="panlecontainer panleEdit">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        <a class="btn btn-default btn-xs go_Back"> <i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  </a>
+                        <a class="btn btn-primary  btn-xs" id="saveInfoGeniParent"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                {{ form_start(enfantForm , {'attr': {'id': 'appbundle_gwparent_edit'}}) }}
+                    <div>
+                        {{ form_label(enfantForm.nom, 'Nom :') }}
+                        {{ form_errors(enfantForm.nom) }}
+                        {{ form_widget(enfantForm.nom , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantForm.prenom, 'Prénom :') }}
+                        {{ form_errors(enfantForm.prenom) }}
+                        {{ form_widget(enfantForm.prenom , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantForm.dateNaissance, 'Date de naissance :') }}
+                        {{ form_errors(enfantForm.dateNaissance) }}
+                        {{ form_widget(enfantForm.dateNaissance , { 'attr': { 'class' : 'form-control Enfant_Date_Nais' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantForm.dateDebutAccueilSouhaite, 'Date de debut d\'accueil souhaité') }}
+                        {{ form_errors(enfantForm.dateDebutAccueilSouhaite) }}
+                        {{ form_widget(enfantForm.dateDebutAccueilSouhaite , { 'attr': { 'class' : 'form-control Enfant_Date_dateDebut' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantForm.lieuscolarisation, 'Lieu de scolarisation:') }}
+                        {{ form_errors(enfantForm.lieuscolarisation) }}
+                        {{ form_widget(enfantForm.lieuscolarisation , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                {{ form_end(enfantForm)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

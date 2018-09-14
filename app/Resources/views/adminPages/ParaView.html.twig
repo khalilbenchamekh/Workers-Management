@@ -1,0 +1,478 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>paramétrage</h2>
+            <div class="panlecontainer">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0 ;margin-top: -8px;">
+                    <div class="tab  " role="tabpanel" >
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" {{ getFromCtrl.tab == "parent" ? 'class="active"' :'' }} ><a href="#Parents" aria-controls="home" role="tab" data-toggle="tab" aria-expanded="false">Parents</a></li>
+                            <li role="presentation" {{ getFromCtrl.tab == "assmat" ? 'class="active"' :'' }}><a href="#Assmats" aria-controls="profile" role="tab" data-toggle="tab" aria-expanded="true">Assmats</a></li>
+                            {#<li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab">Partenaires</a></li>#}
+                        </ul>
+                        <div class="tab-content tabs">
+                            <div role="tabpanel" class="tab-pane fade {{ getFromCtrl.tab =='parent' ? 'in active' :'' }} " id="Parents">
+                                <div class="table-responsive">
+                                    <form action="{{ path('params_parents') }}" method="POST" >
+                                        <div class="text-center">
+                                            <label for="appbundle_para_list_para_parent" class="predefindpara">
+                                                <label style="font-size: 13px;width: auto;">Le paramétrage par défaut des parents &nbsp; &nbsp;</label>
+                                            </label>
+                                            <select id="appbundle_para_list_para_parent" name="appbundle_para_[list_para_parent]" class="form-control">
+                                                {{ user_service.getPredefindPars("parent" , getFromCtrl.defaultParntsParaId )|raw }} {#, fromCtrl.predefendListId#}
+                                            </select>
+                                            <a id="addnewlistpara_parent" data-toggle="tooltip" data-placement="top"
+                                               title="Ajouter un paramétrage prédéfini " class="btn btn-info btn-xs addnewlistpara">
+                                                <i class="fa fa-plus-circle"></i>
+                                            </a>
+                                            <a id="deletelistpara_parent" type="button" data-usertype="parent" data-todo="Suppression" data-toggle="modal" data-target="#modal_update_enfam"
+                                               class="btn btn-danger btn-xs addnewlistpara">
+                                                <i class="fa fa-times-circle" data-toggle="tooltip" data-placement="top" title="Supprimer un paramétrage prédéfini "></i>
+                                            </a>
+                                            <div class="bs-callout bs-callout-primary newlistpara animated fadeInDown" id="newlistpara_parent">
+                                                <h4>Nouveau paramétrage</h4>
+                                                <div class="text-center">
+                                                    <label for="appbundle_para_new_list_para_parent"> Titre de paramétrage  &nbsp; &nbsp;:&nbsp;</label>
+                                                    <input id="parentaction" type="hidden" value="0" name="appbundle_para_[parentaction]">
+                                                    <input type="text" id="appbundle_para_new_list_para_parent" name="appbundle_para_[new_list_para_parent]" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="loaderajaxpr" class="loaderajax animated fadeIn">
+                                            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                                        </div>
+                                        <table class="table table-condensed table-responsive table-paras ">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Informations générales</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_infogeneselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_infogeneselect" name="appbundle_para_[infogeneselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_infogeneselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_infogeneupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_infogeneupdate" name="appbundle_para_[infogeneupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_infogeneupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Responsable 1</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_respo1select">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_respo1select" name="appbundle_para_[respo1select]" class="activatecheck" >
+                                                            <label for="appbundle_para_respo1select"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_respo1update">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_respo1update" name="appbundle_para_[respo1update]" class="activatecheck" >
+                                                            <label for="appbundle_para_respo1update"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Responsable 2</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_respo2select">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_respo2select" name="appbundle_para_[respo2select]" class="activatecheck" >
+                                                            <label for="appbundle_para_respo2select"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_respo2update">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_respo2update" name="appbundle_para_[respo2update]" class="activatecheck" >
+                                                            <label for="appbundle_para_respo2update"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Informations des enfants</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_enfantsselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_enfantsselect" name="appbundle_para_[enfantsselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_enfantsselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_enfantsupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_enfantsupdate" name="appbundle_para_[enfantsupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_enfantsupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Liaisons  enfants - assmats</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_enfamselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_enfamselect" name="appbundle_para_[enfamselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_enfamselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_enfamupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_enfamupdate" name="appbundle_para_[enfamupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_enfamupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_enfamdelete">Supprimer :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_enfamdelete" name="appbundle_para_[enfamdelete]" class="activatecheck" >
+                                                            <label for="appbundle_para_enfamdelete"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Agenda des temps collectifs</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_agendaselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_agendaselect" name="appbundle_para_[agendaselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_agendaselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label for="appbundle_para_agendasinin">Inscrire : </label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_agendasinin" name="appbundle_para_[agendasinin]" class="activatecheck" >
+                                                            <label for="appbundle_para_agendasinin"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable" for="appbundle_para_agendasininforchild">Inscrire pour enfants :</label>
+                                                        <div class="slideThree">
+                                                            {#<input type="checkbox" id="appbundle_para_agendasininforchild" name="appbundle_para_[agendasininforchild]" class="activatecheck">#}
+                                                            <label for="appbundle_para_agendasininforchild"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Liste des inscriptions</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_reselistselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_reselistselect" name="appbundle_para_[reselistselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_reselistselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_reselistdelete">Supprimer :</label>
+                                                        <div class="slideThree">
+                                                            {#<input type="checkbox" id="appbundle_para_reselistdelete" name="appbundle_para_[reselistdelete]" class="activatecheck" >#}
+                                                            <label for="appbundle_para_reselistdelete"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Téléchargement des documents</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_allowdownlond">Autoriser :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_allowdownlond" name="appbundle_para_[allowdownlond]" class="activatecheck" >
+                                                            <label for="appbundle_para_allowdownlond"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="parafootre">
+                                            <div class="setToParents" style="display: inline;">
+                                                <input type="radio" id="setToAllUser" name="appbundle_para_[setParamsForParent]" value="setToAllUser" />
+                                                <label style="padding: 0;width: auto;" for="setToAllUser"> Utiliser ce paramétrage pour tous les parents </label>
+                                                &nbsp;<i class="fa fa-warning" style="color: #ed5d16;" data-toggle="tooltip" data-placement="top"
+                                                         title="Tous les paramétrages que vous avez déjà utilisé pour certains parents vont être remplacer par le nouveau paramétrage séléctionné">
+                                                </i>
+                                                <br>
+                                                <input type="radio" {{ ( true ) ? 'checked="checked"': "" }} id="justForDefault" name="appbundle_para_[setParamsForParent]" value="justForDefault" />
+                                                <label style="padding: 0;width: auto;" for="justForDefault">Seulement pour les parents qui utilisent le paramétrage par defaut</label>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-xs" id="saveParentParams" style="float:right;position:relative;bottom:11px;" > <i class=" fa fa-floppy-o"></i> Sauvegarder </button>
+                                            <a class="btn btn-default btn-xs" id="cansleaddpara_parent"> <i class=" fa fa-close"></i> Annuler </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade {{ getFromCtrl.tab == 'assmat'? 'in active' :'' }}" id="Assmats"  >
+                                <div class="table-responsive">
+                                    <form action="{{ path('params_assmats') }}" method="POST" >
+                                        <div class="text-center">
+                                            <label for="appbundle_para_list_para_assmat" class="predefindpara">
+                                                <label style="font-size: 13px;width: auto;">Le paramétrage par défaut des assmats &nbsp; &nbsp;</label>
+                                            </label>
+                                            <select id="appbundle_para_list_para_assmat" name="appbundle_para_[list_para_assmat]" class="form-control">
+                                                {{ user_service.getPredefindPars("assmat" , getFromCtrl.defaultAssmatParaId )|raw }} {#, fromCtrl.predefendListId#}
+                                            </select>
+                                            <a id="addnewlistpara_assmat" data-toggle="tooltip" data-placement="right"
+                                               title="Ajouter un paramétrage prédéfini" class="btn btn-info btn-xs addnewlistpara">
+                                                <i class="fa fa-plus-circle"></i>
+                                            </a>
+                                            <a id="deletelistpara_assmat" type="button" data-usertype="assmat" data-todo="Suppression" data-toggle="modal" data-target="#modal_update_enfam"
+                                               class="btn btn-danger btn-xs addnewlistpara">
+                                                <i class="fa fa-times-circle" data-toggle="tooltip" data-placement="top" title="Supprimer un paramétrage prédéfini "></i>
+                                            </a>
+                                            <div class="bs-callout bs-callout-primary newlistpara animated fadeInDown" id="newlistpara_assmat">
+                                                <h4>Nouveau paramétrage </h4>
+                                                <div class="text-center">
+                                                    <label for="appbundle_para_new_list_para_assmat"> Titre de paramétrage  &nbsp; &nbsp;:&nbsp;</label>
+                                                    <input id="assmataction" type="hidden" value="0" name="appbundle_para_[assmataction]" >
+                                                    <input type="text" id="appbundle_para_new_list_para_assmat" name="appbundle_para_[new_list_para_assmat]" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id ="loaderajaxam"class="loaderajax animated fadeIn">
+                                            <i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+                                        </div>
+                                        <table class="table table-condensed table-responsive table-paras">
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Informations générales</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para__infoamselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_infoamselect" name="appbundle_para_[infoamselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_infoamselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_infoamupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_infoamupdate" name="appbundle_para_[infoamupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_infoamupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Agréments</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_agreselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_agreselect" name="appbundle_para_[agreselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_agreselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_agreupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_agreupdate" name="appbundle_para_[agreupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_agreupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_agredelete">Supprimer :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_agredelete" name="appbundle_para_[agredelete]" class="activatecheck" >
+                                                            <label for="appbundle_para_agredelete"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Enfants de AM</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_mesenfamselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_mesenfamselect" name="appbundle_para_[mesenfamselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_mesenfamselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_mesenfamupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_mesenfamupdate" name="appbundle_para_[mesenfamupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_mesenfamupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_mesenfamdelete">Supprimer :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_mesenfamdelete" name="appbundle_para_[mesenfamdelete]" class="activatecheck" >
+                                                            <label for="appbundle_para_mesenfamdelete"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Enfants Accueillis</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amenfselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amenfselect" name="appbundle_para_[amenfselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_amenfselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amenfupdate">Modifier :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amenfupdate" name="appbundle_para_[amenfupdate]" class="activatecheck" >
+                                                            <label for="appbundle_para_amenfupdate"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amenfdelete">Supprimer :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amenfdelete" name="appbundle_para_[amenfdelete]" class="activatecheck" >
+                                                            <label for="appbundle_para_amenfdelete"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Agenda des temps collectifs</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amagendaselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amagendaselect" name="appbundle_para_[amagendaselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_amagendaselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable" for="appbundle_para_amagendasinin">Inscrire :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amagendasinin" name="appbundle_para_[amagendasinin]" class="activatecheck" >
+                                                            <label for="appbundle_para_amagendasinin"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable" for="appbundle_para_amagendasininforchild">Inscrire pour enfants :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amagendasininforchild" name="appbundle_para_[amagendasininforchild]" class="activatecheck">
+                                                            <label for="appbundle_para_amagendasininforchild"></label>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Liste des inscriptions</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amreselistselect">Afficher :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amreselistselect" name="appbundle_para_[amreselistselect]" class="activatecheck" >
+                                                            <label for="appbundle_para_amreselistselect"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amreselistdelete">Supprimer :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amreselistdelete" name="appbundle_para_[amreselistdelete]" class="activatecheck" >
+                                                            <label for="appbundle_para_amreselistdelete"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="fa fa-caret-right "></span>
+                                                        <label>Téléchargement des documents</label>
+                                                    </td>
+                                                    <td>
+                                                        <label  class="lableinsedtable"  for="appbundle_para_amallowdownlond">Autoriser  :</label>
+                                                        <div class="slideThree">
+                                                            <input type="checkbox" id="appbundle_para_amallowdownlond" name="appbundle_para_[amallowdownlond]" class="activatecheck" >
+                                                            <label for="appbundle_para_amallowdownlond"></label>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                    <td>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="parafootre">
+                                            <div class="setToAssmats" style="display: inline;">
+                                                <input type="radio" id="setToAllUserAm" name="appbundle_para_[setParamsForAm]" value="setToAllUser" />
+                                                <label style="padding: 0;width: auto;" for="setToAllUserAm"> Utiliser ce paramétrage pour toutes les assmat </label>
+                                                &nbsp;<i class="fa fa-warning" style="color: #ed5d16;" data-toggle="tooltip" data-placement="top"
+                                                         title="Tous les paramétrages que vous avez déjà utilisé pour certaines AM vont être remplacer par le nouveau paramétrage séléctionné">
+                                                </i>
+                                                <br>
+                                                <input type="radio" {{ ( true ) ? 'checked="checked"': "" }} id="justForDefaultAm" name="appbundle_para_[setParamsForAm]" value="justForDefault"/>
+                                                <label style="padding: 0;width: auto;" for="justForDefaultAm">Seulement pour les AM qui utilisent le paramétrage par defaut</label>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-xs" id="saveAssmatsParams" style="float: right;" href="{{ path('Admin_Para') }}"> <i class=" fa fa-floppy-o"></i> Sauvegarder </button>
+                                            <a class="btn btn-default btn-xs" id="cansleaddpara_assmat"> <i class=" fa fa-close"></i> Annuler </a>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {#<div role="tabpanel" class="tab-pane fade" id="Section3">#}
+                                {#<h3>Le parametrage des partenaires </h3>#}
+                            {#</div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

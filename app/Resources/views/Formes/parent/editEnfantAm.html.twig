@@ -1,0 +1,60 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Lier l'enfant {{ enfantAm.vars.value.enfant.prenom }} avec un assistant maternel</h2>
+            <div class="panlecontainer panleEdit">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        <a class="btn btn-default btn-xs go_Back"> <i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  </a>
+                        <a class="btn btn-primary  btn-xs" id="saveInfoGeniParent"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                {{ form_start(enfantAm , {'attr': {'id': 'appbundle_gwparent_edit'}}) }}
+                    <div>
+                        {{ form_label(enfantAm.assmat, 'Assistant maternel :') }}
+                        {{ form_errors(enfantAm.assmat) }}
+                        {{ form_widget(enfantAm.assmat , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                {#TODO#}
+                    <div>
+                        {{ form_label(enfantAm.agrement, 'Agrement :') }}
+                        {{ form_errors(enfantAm.agrement) }}
+                        {{ form_widget(enfantAm.agrement , { 'attr': { 'class' : 'form-control' } } ) }}
+                        <input type="hidden" id="hiddenAgrementId" value="{{ enfantAm.vars.value.agrement.id }}">
+                    </div>
+                    <div>
+                        {{ form_label(enfantAm.dateDebutAcceuil, 'Date debut accueil :') }}
+                        {{ form_errors(enfantAm.dateDebutAcceuil) }}
+                        {{ form_widget(enfantAm.dateDebutAcceuil , { 'attr': { 'class' : 'form-control EnfantAm_Date_Deb' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantAm.dateFinAcceuil, 'Date fin accueil :') }}
+                        {{ form_errors(enfantAm.dateFinAcceuil) }}
+                        {{ form_widget(enfantAm.dateFinAcceuil , { 'attr': { 'class' : 'form-control EnfantAm_Date_fin' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantAm.agrementdispo, 'Agrement Dispo :') }}
+                        {{ form_errors(enfantAm.agrementdispo) }}
+                        <div class="slideThree">
+                            {{ form_widget(enfantAm.agrementdispo , { 'attr': { 'class' : 'activatecheck' } } ) }}
+                            <label for="appbundle_gwenfantacceuil_agrementdispo"></label>
+                        </div>
+                    </div>
+                    <div>
+                        {{ form_label(enfantAm.datedispo, 'Date Dispo :') }}
+                        {{ form_errors(enfantAm.datedispo) }}
+                        {{ form_widget(enfantAm.datedispo , { 'attr': { 'class' : 'form-control EnfantAm_Date_Dispo' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(enfantAm.commentaire, 'Commentaire :' , {'label_attr': {'class': 'textaeraiLable'}}) }}
+                        {{ form_errors(enfantAm.commentaire) }}
+                        {{ form_widget(enfantAm.commentaire , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                {{ form_end(enfantAm)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

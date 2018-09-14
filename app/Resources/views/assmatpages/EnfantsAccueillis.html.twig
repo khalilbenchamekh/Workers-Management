@@ -1,0 +1,56 @@
+{% extends 'assmatpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>
+                Enfants Accueillis {#EnfantsAcceuils|length#}
+            </h2>
+            <div class="panlecontainer">
+                <table id="AgrementTable_id"  class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Agrément</th>
+                        <th>Nom enfant</th>
+                        <th>Prénom enfant</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Commentaire</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for enfAcc in EnfantsAcceuils %}
+                        <tr>
+                            <th scope="row">{{ enfAcc.agrement.nom != null ? enfAcc.agrement.nom.nom  : "#"~enfAcc.agrement.id }}</th>
+                            <th>{{ enfAcc.enfant.nom }}</th>
+                            <td>{{ enfAcc.enfant.prenom }}</td>
+                            <td>{{ enfAcc.dateDebutAcceuil != null ? enfAcc.dateDebutAcceuil|date('d/m/Y') :"" }}</td>
+                            <td>{{ enfAcc.dateFinAcceuil != null ? enfAcc.dateFinAcceuil|date('d/m/Y') :""}}</td>
+                            <td>{{ enfAcc.commentaire }} </td>
+                            <td>
+                                {% if( parameters.3.allowUpdate ) %}
+                                    <a  href="{{ path('edit_am_enf' , { 'id' : enfAcc.id , 'edit' : 1 } ) }}" class="btnactions">
+                                        <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Modifier" >
+                                            <i class="fa fa-square-o fa-stack-2x"></i>
+                                            <i class="fa fa-pencil fa-stack-1x"></i>
+                                        </span>
+                                    </a>
+                                {% endif %}
+                                {% if( parameters.3.allowDelete ) %}
+                                    <a  href="#" class="btnactions"  type="button" data-enamid="{{ enfAcc.id }}" data-todo="Suppression" data-toggle="modal" data-target="#modal_update_enfam">
+                                        <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Supprimer" >
+                                            <i class="fa fa-square-o fa-stack-2x"></i>
+                                            <i class="fa fa-close fa-stack-1x"></i>
+                                        </span>
+                                    </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

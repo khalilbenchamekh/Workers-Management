@@ -1,0 +1,71 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block pageContainer %}
+<div class="myrow">
+    <div class="contenu_fieldset" style="display: block;">
+        <h2 class="panleHead"><span>| &nbsp; </span>Modifier log</h2>
+        <div class="panlecontainer">
+            <div class="panleContainerHead">
+                <div class="clearfix col-lg-6 updateinfo">
+                    <a class="btn btn-default btn-xs"  href="{{ path('Admin_Logs_index') }}"><i class=" fa fa-list"></i> Retour à la liste </a>
+                    {% if edit_form.vars.value.statu !='valide' %}
+                        <a class="btn btn-success btn-xs" href="{{ path('Admin_Logs_valide', { 'id': edit_form.vars.value.id }) }}"> <i class="fa fa-check"></i> Valider</a>
+                    {% endif %}
+                    <a class="btn btn-primary btn-xs" id="saveupdatelogsinfo"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    <div class="deletforme">
+                        {{ form_start(delete_form) }}
+                            <button class="btn btn-danger btn-xs" type="submit" id="deleteupdatelog"><i class='fa fa-close'></i> Supprimer </button>
+                        {{ form_end(delete_form) }}
+                    </div>
+
+                </div>
+            </div>
+            {{ form_start(edit_form, {'attr': {'id': 'appbundle_updatelogs_edit'}}) }}
+                <div>
+                    <strong>
+                        <span class="fa fa-caret-right text-primary"></span>
+                        {{ form_label(edit_form.tableName, 'Nom de Table ') }}
+                    </strong>
+                    {{ form_errors(edit_form.tableName) }}
+                    {{ form_widget(edit_form.tableName , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    <strong>
+                        <span class="fa fa-caret-right text-primary"></span>
+                        {{ form_label(edit_form.champName, 'Nom de champ') }}
+                    </strong>
+                    {{ form_errors(edit_form.champName) }}
+                    {{ form_widget(edit_form.champName , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    <strong>
+                        <span class="fa fa-caret-right text-primary"></span>
+                        {{ form_label(edit_form.value, 'Nouvelle valeur') }}
+                    </strong>
+                    {{ form_errors(edit_form.value) }}
+                    {{ form_widget(edit_form.value , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    <strong>
+                        <span class="fa fa-caret-right text-primary"></span>
+                        {{ form_label(edit_form.commante, 'Commentaire') }}
+                    </strong>
+                    {{ form_errors(edit_form.commante) }}
+                    {{ form_widget(edit_form.commante , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+            {{ form_end(edit_form)}}
+        </div>
+        <style>
+            .panlecontainer form div label{
+                padding:0px !important;
+            }
+            #appbundle_updatelogs_edit div {
+                margin-left: 61px;
+            }
+            #appbundle_updatelogs_edit div input , #appbundle_updatelogs_edit div textarea{
+                min-width: 316px;
+            }
+
+        </style>
+    </div>
+</div>
+{% endblock %}

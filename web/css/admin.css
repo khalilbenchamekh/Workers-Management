@@ -1,0 +1,186 @@
+
+/*ADMIN STYLE*/
+.dashboard .item span {
+    position: relative;
+    display: block;
+    text-align: center;
+    min-height: 242px;
+    background-color: #f3f3f3;
+    padding: 12px 0px 0px 0px;
+    border-radius: 4px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 30px;
+    color: #767676;
+    font-weight: bold;
+    border: 1px solid #dfdfdf;
+}
+.dashboard .item small{
+    font-size: 17px;
+    font-weight: 400;
+}
+.dashboard .item .ingramweb{
+    font-size: 11px;
+    font-weight: 100;
+    display: block;
+    text-decoration: underline;
+}
+
+
+.latest .Docs{
+    overflow: scroll;
+    max-height: 179px;
+}
+.progrecebar{
+    display: none;
+    float: left;    
+    position: relative;
+    left: 50%;
+}
+.progrecebar img{
+    max-width: 38px;
+}
+.userInfo p{
+    margin: 0;
+}
+.userInfo p span {
+    display: block;
+    padding: 4px 3px;
+    margin: 0;
+    /*text-align: center;*/
+}
+.userInfo p span:first-child{
+    background:#f3f3f3;
+    padding:0;
+}
+.userInfo p span:nth-child(2){
+    border:1px solid #eee;
+    text-align: center;
+}
+
+.changePass .panel .panel-body{
+    display: none;
+}
+
+.userInfo .form-control {
+    margin-top: 0;
+}
+
+.userinfo .table tr td:nth-child(2) input[type="text"] , .userinfo .table tr td:nth-child(2) input[type="email"]{
+    height: 32px;
+    color: #888;
+    border-radius: 5px;
+    padding: 0px 0px 0px 8px;
+    width: 251px;
+    border: 1px solid #bbb;
+    box-shadow: inset 0px 0px 1px rgb(146, 144, 144);
+}
+
+/*parametre style */
+/*Tabs Para*/
+a:hover,a:focus{
+    outline: none;
+    text-decoration: none;
+}
+.tab .nav-tabs{
+    position: relative;
+    border-bottom: 0 none;
+    background: #fcfcfc;
+}
+.tab .nav-tabs li{
+    text-align: center;
+    margin-right: 0;
+}
+.tab .nav-tabs li a {
+    font-size: 12px;
+    font-weight: 600;
+    color: #999;
+    text-transform: uppercase;
+    padding: 11px 30px;
+    background: #fff;
+    margin-right: 0;
+    border-radius: 0;
+    border: 1px solid #ddd;
+    border-right: none;
+    border-bottom: 2px solid #ddd;
+    position: relative;
+    height: 40px;
+    transition: all 0.5s ease 0s;
+    border-bottom: 2px solid #ddd;
+}
+.tab .nav-tabs li:last-child a,
+.tab .nav-tabs li:last-child.active a,
+.tab .nav-tabs li:last-child a:hover{
+    border-right: 1px solid #ddd;
+}
+
+.tab .nav-tabs li.active a{
+    color: #EC5910;
+    border-bottom: 2px solid #EC5910;
+    border-right: none;
+}
+.tab .nav-tabs li a:hover{
+    color: #42aaf5;
+    border-bottom: 2px solid #42aaf5;
+    border-right: none;
+}
+.tab .tab-content{
+    font-size: 14px;
+    color: #6f6c6c;
+    line-height: 26px;
+    padding:20px 10px 0px 10px;
+    /*margin-top: 4px;*/
+    border: 1px solid #eee;
+}
+.tab .tab-content h3{
+    font-size: 19px;
+    color: #6f6c6c;
+    margin-top: 0;
+}
+@media only screen and (max-width: 480px){
+    .tab .nav-tabs li{
+        width: 100%;
+        border-right: 1px solid #ddd;
+        margin-bottom: 8px;
+    }
+}
+/*Params style*/
+.table-paras tr td{
+    padding: 3px!important;
+}
+.table-paras tr td>label{
+    margin-bottom: 0px;
+    margin-top: 2px;
+}
+.parafootre {
+    background: #fcfcfc;
+    overflow: auto;
+    padding: 6px;
+    margin-top: 25px;
+    border: 1px solid #EEE;
+    margin-bottom: 8px;
+}
+.lableinsedtable{
+    font-weight: 600!important;
+    font-size: 10.5px !important;
+}
+.addnewlistpara{
+    margin-bottom: 2px;
+}
+.newlistpara{
+    display: none;
+    text-align: left;
+}
+.parafootre .btn-default{
+    float: right;
+    margin-right: 6px;
+    display: none;
+}
+
+#deletelistpara_parent , #deletelistpara_assmat{
+    display: none;
+}
+tbody .fa-caret-right , tbody .fa-star ,
+tbody .fa-user ,tbody .fa-calendar-check-o
+,tbody .fa-calendar-times-o {
+    color: #42aaf5;
+}

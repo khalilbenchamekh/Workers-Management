@@ -1,0 +1,141 @@
+<?php
+
+namespace AppBundle\Entity;
+
+/**
+ * GwMotifContact
+ */
+class GwMotifContact
+{
+    /**
+     * @var string
+     */
+    private $motif;
+
+    /**
+     * @var \DateTime
+     */
+    private $createdat;
+
+    /**
+     * @var \DateTime
+     */
+    private $updatedat;
+
+    /**
+     * @var boolean
+     */
+    private $cacher;
+
+    /**
+     * @var integer
+     */
+    private $id;
+
+
+    /**
+     * Set motif
+     *
+     * @param string $motif
+     *
+     * @return GwMotifContact
+     */
+    public function setMotif($motif)
+    {
+        $this->motif = $motif;
+
+        return $this;
+    }
+
+    /**
+     * Get motif
+     *
+     * @return string
+     */
+    public function getMotif()
+    {
+        return $this->motif;
+    }
+
+    /**
+     * Set createdat
+     *
+     * @param \DateTime $createdat
+     *
+     * @return GwMotifContact
+     */
+    public function setCreatedat($createdat)
+    {
+        $this->createdat = $createdat;
+
+        return $this;
+    }
+
+    /**
+     * Get createdat
+     *
+     * @return \DateTime
+     */
+    public function getCreatedat()
+    {
+        return $this->createdat;
+    }
+
+    /**
+     * Set updatedat
+     *
+     * @param \DateTime $updatedat
+     *
+     * @return GwMotifContact
+     */
+    public function setUpdatedat($updatedat)
+    {
+        $this->updatedat = $updatedat;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedat
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedat()
+    {
+        return $this->updatedat;
+    }
+
+    /**
+     * Set cacher
+     *
+     * @param boolean $cacher
+     *
+     * @return GwMotifContact
+     */
+    public function setCacher($cacher)
+    {
+        $this->cacher = $cacher;
+
+        return $this;
+    }
+
+    /**
+     * Get cacher
+     *
+     * @return boolean
+     */
+    public function getCacher()
+    {
+        return $this->cacher;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

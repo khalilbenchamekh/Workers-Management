@@ -1,0 +1,22 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block pageContainer %}
+<div class="myrow">
+    <div class="contenu_fieldset" style="display: block;">
+        <h2 class="panleHead">
+            <span>| &nbsp; </span>Update_log creation</h2>
+        <div class="panlecontainer">
+            <div class="panleContainerHead">
+                <div class="clearfix col-lg-6 updateinfo">
+                    <a  class="btn btn-success btn-xs" href="{{ path('Admin_Logs_index') }}"><i class=" fa fa-list"></i> Back to the list</a>
+                </div>
+            </div>
+            <div class="panlecontainer">
+            {{ form_start(form )}}
+                {{ form_widget(form)}}
+                <input type="submit" value="Create" />
+            {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

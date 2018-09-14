@@ -1,0 +1,56 @@
+{% extends 'assmatpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>
+                Les Enfants {#EnfantsAcceuils|length#}
+            </h2>
+            <div class="panlecontainer">
+
+                <table id="AgrementTable_id"  class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th>Date de naissance</th>
+                        <th>Age</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for enf in MesEnfants %}
+                        <tr>
+                            <th scope="row">{{ enf.nom }}</th>
+                            <td>{{ enf.prenom }}</td>
+                            <td>{{ enf.dateN != null ? enf.dateN|date('d/m/Y') :"" }}</td>
+                            {#<td>{{ enf.age }}</td>#}
+                            <td>{{  enf.dateN != null ? ( 'now'|date('Y') - enf.dateN|date('Y') + ('now'|date('2017-m-d')|date('U') - enf.dateN|date('2017-m-d')|date('U') >= 0 ? 1 : 0 )) : ""}}</td>
+                            <td>
+                                {#<a  href="#" class="btnactions">#}
+                                    {#<span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Modifier" >#}
+                                        {#<i class="fa fa-square-o fa-stack-2x"></i>#}
+                                        {#<i class="fa fa-pencil fa-stack-1x"></i>#}
+                                    {#</span>#}
+                                {#</a>#}
+                                <a href="#" class="btnactions">
+                                    <span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Afficher">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-eye fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                                {#<a  href="#" class="btnactions"  type="button" data-enamid="{{ enf.id }}" data-todo="Suppression" data-toggle="modal" data-target="#modal_update_enfam">#}
+                                    {#<span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Supprimer" >#}
+                                        {#<i class="fa fa-square-o fa-stack-2x"></i>#}
+                                        {#<i class="fa fa-close fa-stack-1x"></i>#}
+                                    {#</span>#}
+                                {#</a>#}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

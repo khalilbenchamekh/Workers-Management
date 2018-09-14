@@ -1,0 +1,144 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Modifier les inforamtions de parent [ {{ parent.username }} ] </h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                    	<a class="btn btn-default btn-xs go_Back"> 
+                    		<i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  
+                		</a>
+                      	<a class="btn btn-primary btn-xs" id="SaveInfosBtn" > <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                <div class="panlecontainer">
+	                <div class="col-md-12 userinfo">
+			            <div class="table-responsive" id="InfosForm">
+			            	{{ form_start(form) }}
+			            		<table class="table table-condensed table-responsive table-user-information">
+					                <tbody>
+					            		<tr>
+					            			<td>
+						                        <strong>
+						                        	<span class="fa fa-user text-primary"></span>
+					                        		{{ form_label(form.username, "Nom d'utilisateur :", {'label_attr': {'class': 'foo'}}) }}
+						                        </strong>
+					                        </td>
+					                        <td class="text-primary">
+				                        		{{ form_widget(form.username , { 'attr': {'class': 'form-control username'} } ) }}
+			                        		</td>
+			                        		<td>
+			                        			{{ form_errors(form.username) }}
+			                        		</td>
+					                    </tr>
+					                    <tr>
+					            			<td>
+						                        <strong>
+						                        	<span class="fa fa-envelope text-primary"></span>
+					                        		{{ form_label(form.email, "Adresse mail :", {'label_attr': {'class': 'foo'}}) }}
+						                        </strong>
+					                        </td>
+					                        <td class="text-primary">
+				                        		{{ form_widget(form.email , { 'attr': { 'class' : 'form-control' } } )  }}
+			                        		</td>
+			                        		<td>
+			                        			{{ form_errors(form.email) }}
+			                        		</td>
+					                    </tr>
+					                    <tr>
+					            			<td>
+						                        <strong>
+						                        	<span class="fa fa-check-circle text-primary"></span>
+					                        		{{ form_label(form.enabled, "Activer :", {'label_attr': {'class': 'foo','type': 'mail'}}) }}
+						                        </strong>
+					                        </td>
+											<td class="text-primary">
+												<div class="slideThree">
+                                                    {{ form_widget(form.enabled , { 'attr': {'id': 'slideThree ' , 'name':'check' , 'class' : 'activatecheck form-control' } } ) }}
+													<label for="appbundle_user_ra_enabled"></label>
+												</div>
+											</td>
+											<td>
+			                        			{{ form_errors(form.enabled) }}
+			                        		</td>
+										</tr>
+				                    </tbody>
+					            </table>
+		            		{{ form_end(form)}}
+			            </div>
+						<div class="changePass">
+							<div class="panel panel-danger animated fadeIn">
+								<div class="panel-heading" id="showPanel">changer le mot de passe <i class="fa fa-angle-double-down"></i> </div>
+								<div class="panel-body animated fadeIn">
+									<form action="#" method="POST">
+										<div class="userInfo col-lg-10 col-lg-offset-1">
+											<div class="form-group" >
+												<div class="input-group" style="width: 100%;">
+													<div class="input-group-addon" style="width: 38px; padding: 0px;"><span class="fa fa-lock"></span></div>
+													<input class="form-control" type="password" required placeholder="Nouveau mot de passe" id="newpasse">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="input-group">
+													<div class="input-group-addon" style="width: 38px; padding: 0px;"><span class="fa fa-check"></span></div>
+													<input class="form-control" type="password" required placeholder="Confirmer le mot de passe" id="confnewpass">
+												</div>
+											</div>
+											<button class="btn btn-primary btn-xs" id="SaveInfosBtnPass" type="submit" >
+												<i id="lodingicon" class="fa fa-floppy-o"> </i>
+												Sauvegarder
+											</button>
+											<div id="ajaxMsg"></div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<script>
+                                function changeLodingIcone() {
+                                    $("#lodingicon").attr("class","fa fa-pencil-square-o");
+                                }
+                                $('#SaveInfosBtnPass').click(function( e ){
+                                    e.preventDefault();
+                                    $("#lodingicon").attr("class","fa fa-spinner fa-spin fa-fw");
+                                    var newpasse = $('#newpasse').val(),
+                                        confnewpass = $('#confnewpass').val(),
+                                        ajaxmsg = $('#ajaxMsg');
+                                    if( newpasse != ""){
+                                        if( confnewpass != ""){
+                                            if( newpasse === confnewpass ){
+                                                insertdata = { "newpass" : newpasse , "confnewpass" : confnewpass };
+                                                $.ajax({
+                                                    url: "{{ path('editPassword' , {'id' : parent.id  }) }}" ,
+                                                    method: "POST",
+                                                    data: insertdata ,
+                                                    success: function (data) {
+                                                        ajaxmsg.html(data);
+                                                        $('#newpasse').val("");
+                                                        $('#confnewpass').val("");
+                                                        changeLodingIcone();
+                                                    }
+                                                });
+                                            }else{
+                                                ajaxmsg.html("le mot de passe est incorrecte ! ");
+                                                changeLodingIcone();
+                                            }
+                                        }else{
+                                            changeLodingIcone();
+                                            $('#confnewpass').focus();
+                                        }
+                                    }else{
+                                        changeLodingIcone();
+                                        $('#newpasse').focus();
+                                    }
+                                });
+
+							</script>
+						</div>
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

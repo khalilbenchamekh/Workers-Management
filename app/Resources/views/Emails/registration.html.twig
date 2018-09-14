@@ -1,0 +1,89 @@
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Portail professionnel & famille</title>
+    {% block stylesheets %}
+        <style>
+            .logo{
+                max-width: 278px;
+                width: 278px;
+            }
+            .body{
+                text-align: center;
+            }
+            .agayo{
+                background: #f4f4f4;
+                border: 1px solid #e6e5e5;
+                box-shadow: 0px 4px 6px #a6a6a6;
+            }
+            .ahlig{
+                background: #fcfcfc;
+                box-shadow: 0 1px 16px -5px black;
+                padding: 51px;
+            }
+
+        </style>
+    {% endblock %}
+</head>
+<body>
+    {% block body %}
+        <table class="core">
+            <tr class="head">
+                <td align="center" class="agayo" style="background: #f9f9f9;">
+                    <img class="logo" width="278" src="http://46.227.22.66/relais_assmat/web/img/logo.png">
+                </td>
+            </tr>
+            <tr><td></td></tr>
+            <tr><td></td></tr>
+            <tr class="body">
+                <td class="ahlig">
+                    <p>Les informations de votre demande d'inscription au temp collectif : {{ resr.tempsColl.nom }} . </p>
+                    <table align="center">
+                        <tr>
+                            <td>Nom de temp collectif </td>
+                            <td>: {{ resr.id }} {{ resr.tempsColl.nom }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date </td>
+                            <td>: {{ resr.tempsColl.date|date("Y/m/d") }}</td>
+                        </tr>
+                        <tr>
+                            <td>lieu </td>
+                            <td>: {{ resr.tempsColl.lieu }}</td>
+                        </tr>
+                        <tr>
+                            <td>Catégorie </td>
+                            <td>: {{ resr.tempsColl.categorie }}</td>
+                        </tr>
+                        <tr>
+                            <td>Activité  </td>
+                            <td>: {{ resr.tempsColl.tcactivite != null ? resr.tempsColl.tcactivite.tcactivite : "." }}</td>
+                        </tr>
+                        <tr>
+                            <td>Heur debut </td>
+                            <td>:{{ (resr.tempsColl.hDeb|length > 6) ? resr.tempsColl.hDeb|slice(10,6) : resr.tempsColl.hDeb }}</td>
+                        </tr>
+                        <tr>
+                            <td>Heur fin </td>
+                            <td>:{{ (resr.tempsColl.hFin|length > 6) ? resr.tempsColl.hFin|slice(10,6) : resr.tempsColl.hFin }}</td>
+                        </tr>
+                        <tr>
+                            <td>Validation par RAM </td>
+                            <td>: {{ resr.typeValidation == 0 ? "En attente" : "Validée" }}</td>
+                        </tr>
+                        <tr>
+                            <td>Date d'inscription </td>
+                            <td>: {{ resr.dateReservation|date("Y/m/d") }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr class="footer">
+                <td align="center"><img class="logo" width="158" src="http://46.227.22.66/relais_assmat/web/img/logo.png">
+                    <a href="{{ url('homepage') }}"> Portail professionnel & famille </a>
+                </td>
+            </tr>
+        </table>
+    {% endblock %}
+</body>
+</html>

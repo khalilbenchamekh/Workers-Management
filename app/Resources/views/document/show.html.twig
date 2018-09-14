@@ -1,0 +1,187 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% set exts = ["png", "jpg","PNG", "JPG"] %}
+{% set docaccess = document.docaccess|split(',') %}
+{% set nondata = '<div class="myrow"> <span class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center">Aucun resultat . </span></div>' %}
+{% block pageContainer %}
+<div class="myrow">
+    <div class="contenu_fieldset" style="display: block;">
+        <h2 class="panleHead">
+            <span>| &nbsp; </span>Gestion de document </h2>
+        <div class="panlecontainer">
+            <div class="panleContainerHead">
+                <div class="clearfix col-lg-6 updateinfo">
+                    <a href="{{ path('document_index') }}" class="btn btn-default btn-xs">
+                        <i class=" fa fa-list" data-toggle="tooltip" data-placement="top" title="Liste"></i>
+                    </a>
+                    {#<a class="btn btn-primary btn-xs" href="{{ path('document_new') }}"> <i class=" fa fa-upload "></i> Updload </a>#}
+
+                    {#<a  download style="color: #ee5d16;" > <i class="fa fa-download fa-2x "></i> </a>#}
+                    <a href="{{ asset('uploads/documents/'~document.name ) }}" download class="btn btn-success btn-xs"><i class=' fa fa-download  '></i> Télécharger </a>
+                    <a href="{{ path('document_edit', { 'id': document.id }) }}" class="btn btn-primary btn-xs"><i class=' fa fa-edit '></i> Modifier </a>
+                    <div style="display: inline-block;">
+                        {{ form_start(delete_form) }}
+                        <button class="btn btn-danger btn-xs" type="submit" value="Delete"
+                        onclick="return(confirm('Vous voulez vraiment supprimer ce document ?'))">
+                            <i class=' fa fa-trash-o  '></i> Supprimer
+                        </button>
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
+            <div class="panlecontainer">
+                <h1 style="color: #666;">{{ document.title }}</h1>
+                <table class="table table-condensed table-responsive table-user-information">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right  text-primary"></span>
+                                    Commentaire :
+                                </strong>
+                            </td>
+                            <td class="text-primary" style="max-width: 409px;">
+                                 {{ document.commant }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right  text-primary"></span>
+                                    Extension :
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                 {{ document.filetype }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right  text-primary"></span>
+                                    Gestion de l'accés au document :
+                                </strong>
+                            </td>
+                            <td class="text-primary" style="max-width: 530px;">
+                                {% if "all" in docaccess %}
+                                    Tous les utilisateurs .
+                                {% else %}
+                                    Autoriser à :
+                                    {% if "parent" in docaccess %}
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12"><span class="fa fa-caret-right  text-primary"></span>Tous les Parents .</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if "assmat" in docaccess %}
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12"><span class="fa fa-caret-right  text-primary"></span>Tous les Assmats .</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if "part" in docaccess %}
+                                        <div class="col-lg-12">
+                                            <div class="col-lg-12"><span class="fa fa-caret-right  text-primary"></span>Tous les Partenaires .</div>
+                                        </div>
+                                    {% endif %}
+                                    {% if "sparent" in docaccess %}
+                                        <div class="usersids col-lg-12 col-md-12  col-sm-12" style="padding: 0">
+                                            <div class="col-lg-2 col-md-2  col-sm-2" style="padding: 0">
+                                                <span class="fa fa-caret-right  text-primary"></span>
+                                                Parents
+                                            </div>
+                                            <table class="mytableheader col-lg-10 col-md-10 col-sm-10">
+                                                <thead style="display: block">
+                                                    <tr>
+                                                        <th class="col-lg-1 col-md-1 col-sm-1">#ID</th>
+                                                        <th class="col-lg-3 col-md-3 col-sm-3">Pseudo</th>
+                                                        <th class="col-lg-4 col-md-4 col-sm-4">Respo 1</th>
+                                                        <th class="col-lg-4 col-md-4 col-sm-4">Respo 2</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody class="Mytable" style="display: block">
+                                                    {{ document.sparentids != "" ? user_service.getUsersHTMLRows('parent' , document.sparentids )|raw : nondata|raw  }}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                    {% if "sassmat" in docaccess %}
+                                        <div class="usersids col-lg-12 col-md-12  col-sm-12" style="padding: 0">
+                                            <div class="col-lg-2 col-md-2  col-sm-2" style="padding: 0">
+                                                <span class="fa fa-caret-right  text-primary"></span>
+                                                Assmats
+                                            </div>
+                                            <table class="mytableheader col-lg-10 col-md-10 col-sm-10">
+                                                <thead style="display: block">
+                                                <tr>
+                                                    <th class="col-lg-1 col-md-1 col-sm-1">#ID</th>
+                                                    <th class="col-lg-3 col-md-3 col-sm-3">Pseudo</th>
+                                                    <th class="col-lg-4 col-md-4 col-sm-4">Nom</th>
+                                                    <th class="col-lg-4 col-md-4 col-sm-4">Prénom</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="Mytable Mytable2" style="display: block">
+                                                    {{ document.samids != "" ? user_service.getUsersHTMLRows('assmat' , document.samids )|raw : nondata|raw  }}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                    {% if "spart" in docaccess %}
+                                        <div class="usersids col-lg-12 col-md-12  col-sm-12" style="padding: 0">
+                                            <div class="col-lg-2 col-md-2  col-sm-2" style="padding: 0">
+                                                <span class="fa fa-caret-right  text-primary"></span>
+                                                Partenaires
+                                            </div>
+                                            <table class="mytableheader col-lg-10 col-md-10 col-sm-10">
+                                                <thead style="display: block">
+                                                <tr>
+                                                    <th class="col-lg-1 col-md-1 col-sm-1">#ID</th>
+                                                    <th class="col-lg-3 col-md-3 col-sm-3">Pseudo</th>
+                                                    <th class="col-lg-4 col-md-4 col-sm-4">Nom</th>
+                                                    <th class="col-lg-4 col-md-4 col-sm-4">Prénom</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="Mytable Mytable3" style="display: block">
+                                                    {{ document.spartids != "" ? user_service.getUsersHTMLRows('part' , document.spartids )|raw : nondata|raw  }}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% endif %}
+                                    {% if "scollectif" in docaccess %}
+                                        <div class="usersids col-lg-12 col-md-12  col-sm-12" style="padding: 0px;">
+                                            <div class="col-lg-3 col-md-3  col-sm-3" style="padding: 0px;">
+                                                <span class="fa fa-caret-right  text-primary"></span>
+                                                Utilisateurs qui sont inscrit dans des temps collectifs
+                                            </div>
+                                            <div class="mytableheader col-lg-9 col-md-9 col-sm-9" style="padding: 0px;">
+                                                <div class="header">
+                                                    <span class="col-lg-4 col-md-4 col-sm-4">#ID</span>
+                                                    <span class="col-lg-8 col-md-8 col-sm-8">Temp collectif</span>
+                                                </div>
+                                            </div>
+                                            <div class="Mytable  col-lg-9 col-md-9 col-sm-9" style="padding: 0px;">
+                                                <div class="body">
+                                                    {{  document.scollectifids != "" ? parent_generator.getTempsCollectifHtmlRows( document.scollectifids )|raw : nondata|raw  }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>
+                                    <span class="fa fa-caret-right  text-primary"></span>
+                                    Document :
+                                </strong>
+                            </td>
+                            <td class="text-primary">
+                                {% if document.filetype in exts %}
+                                    <img src="{{ asset('uploads/documents/'~document.name ) }}" alt="Document" style="max-width: 471px;max-height: 600px;">
+                                {#{% else %}#}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+{% endblock %}

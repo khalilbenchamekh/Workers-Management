@@ -1,0 +1,222 @@
+{% extends 'pagesbase.html.twig' %}
+{% block pageContainer %}
+  <div class="myrow">
+    <div class="contenu_fieldset" style="display: block;">
+      <h2 class="panleHead">
+            <span>| &nbsp; </span>RESPONSABLE 1 <small style="color:#fff;">[ {{ Resp1.Nom }} {{ Resp1.Prenom }} ]</small>
+      </h2>
+      <div class="panlecontainer">
+        <div class="panleContainerHead">
+            {% if parameters.1.allowUpdate %}
+                <div class="clearfix col-lg-6 updateinfo">
+                  <a class="btn btn-primary btn-xs" href=" {{ path('editResp1' , {'id' : Resp1.id }) }}"> <i class=" fa fa-pencil-square-o"></i> Modifier </a>
+                </div>
+            {% endif %}
+        </div>
+          <div class="col-md-12 ">
+              <div class="table-responsive">
+                  <table class="table table-condensed table-responsive table-user-information">
+                      <tbody>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Civilité :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ parent_generator.getCivilites(Resp1.civilite) }} </span>
+                              </td>
+                              <td>
+                              </td>
+                              <td class="text-primary">
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Nom :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.Nom }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Prénom :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.Prenom }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Code postal :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.cp }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Numéro de rue :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.numRue }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Rue 1 :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.rue1 }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Rue 2 :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.rue2 }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Ville :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.ville }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Quartier :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.quartier != null ? Resp1.quartier.titre : "." }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Secteur :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ (Resp1.secteur != null) ? Resp1.secteur.titre : '.'  }}</span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Rivoli/Fantor :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.rivoli }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Téléphone Perso :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.telPerso }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Téléphone Pro :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.telPro }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Adresse mail :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.adresseMail }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Adresse mail Pro :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.adresseMailPro }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Portable :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.portable }} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Fax :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ Resp1.fax }}</span>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Profession :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span> {{ Resp1.profession != null ? Resp1.profession.nom : ' '}} </span>
+                              </td>
+                              <td>
+                                  <strong>
+                                      <span class="fa fa-caret-right  text-primary"></span>
+                                      Lieu de travail :
+                                  </strong>
+                              </td>
+                              <td class="text-primary">
+                                  <span>{{ (Resp1.lieutravail != null) ? Resp1.lieutravail.nom : '.'  }}</span>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

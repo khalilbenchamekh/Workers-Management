@@ -1,0 +1,60 @@
+{% extends 'partpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>
+                Téléchargements
+            </h2>
+            <div class="panlecontainer">
+                <table id="DownlondTable_id"  class="table table-striped table-hover"> 
+                    <thead> 
+                        <tr> 
+                            <th>ID</th> 
+                            <th>document</th> 
+                            <th>Actions</th>  
+                        </tr> 
+                    </thead> 
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>text.html</td>
+                            <td>
+                                <a  href="{{ asset('Uplode/text.html') }}" download class="btnactions">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-download fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                                <a href="{{ asset('Uplode/text.html') }}" target="_blank" class="btnactions">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-eye fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>test.docx</td>
+                            <td>
+                                <a href="{{ asset('Uplode/test.docx') }}" download class="btnactions">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-download fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                                <a href="{{ asset('Uplode/test.docx') }}" target="_blank" class="btnactions">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fa fa-square-o fa-stack-2x"></i>
+                                        <i class="fa fa-eye fa-stack-1x"></i>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>   
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

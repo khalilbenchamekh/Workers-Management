@@ -1,0 +1,245 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% set userid =  app.request.attributes.get('id') %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>paramétrage de : {{ fromCtrl.thisUserFiche }}  </h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                    	<a class="btn btn-default btn-xs" href="{{ path('admin_users' , { 'userType' : "parent"} ) }}">
+                    		<i class=" fa fa-list" data-toggle="tooltip" data-placement="top" title="Afficher la liste"></i>
+                		</a>
+                      {#<a class="btn btn-primary btn-xs" href="#" > <i class=" fa fa-pencil-square-o"></i> Modifier </a>#}
+                    </div>
+                </div>
+				<div class="col-md-12 userinfo">
+					<div class="table-responsive">
+						<form action="{{ path('user_paraparent' , { 'id' : userid } ) }}" method="POST" >
+							<div class="text-center">
+								<div class="roundedOne">
+									<input type="hidden" value="parent" id="usertype">
+									<input type="checkbox" {{ ( fromCtrl.predefiniPara == true ) ? 'checked="checked"': "" }} id="predefindpara" name="appbundle_para_[predefindpara]" />
+									<label for="predefindpara"></label>
+								</div>
+								<label for="predefindpara" class="predefindpara"> <lable for="predefindpara">&nbsp; Utiliser un paramétrage prédéfini  &nbsp; &nbsp; </lable> </label>
+								<select id="appbundle_listpara_parent" name="appbundle_para_[listpara]" class="form-control appbundle_para_listpara">
+                                    {{ user_service.getPredefindPars("parent" , fromCtrl.predefendListId )|raw }}
+								</select>
+							</div>
+							<div id="loaderajaxpr" class="loaderajax animated fadeIn">
+								<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+							</div>
+							<table class="table table-condensed table-responsive table-paras">
+								<tbody>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right"></span>
+										<label >Informations générales</label>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_infogeneselect">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_infogeneselect" name="appbundle_para_[infogeneselect]" class="activatecheck"
+													{{ (attribute(params2, "pr_infogenerales").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_infogeneselect"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_infogeneupdate">Modifier :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_infogeneupdate" name="appbundle_para_[infogeneupdate]" class="activatecheck"
+													{{ (attribute(params2, "pr_infogenerales").allowUpdate == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_infogeneupdate"></label>
+										</div>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right"></span>
+										<label >Responsable 1</label>
+									</td>
+									<td >
+										<label class="lableinsedtable" for="appbundle_para_respo1select">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_respo1select" name="appbundle_para_[respo1select]" class="activatecheck"
+													{{ (attribute(params2, "pr_respo1").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_respo1select"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_respo1update">Modifier :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_respo1update" name="appbundle_para_[respo1update]" class="activatecheck"
+													{{ (attribute(params2, "pr_respo1").allowUpdate == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_respo1update"></label>
+										</div>
+									</td>
+									<td >
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right  "></span>
+										<label >Responsable 2</label>
+									</td>
+									<td >
+										<label class="lableinsedtable" for="appbundle_para_respo2select">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_respo2select" name="appbundle_para_[respo2select]" class="activatecheck"
+													{{ (attribute(params2, "pr_respo2").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_respo2select"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_respo2update">Modifier :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_respo2update" name="appbundle_para_[respo2update]" class="activatecheck"
+													{{ (attribute(params2, "pr_respo2").allowUpdate == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_respo2update"></label>
+										</div>
+									</td>
+									<td >
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right  "></span>
+										<label >Informations des enfants</label>
+									</td>
+									<td >
+										<label class="lableinsedtable" for="appbundle_para_enfantsselect">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_enfantsselect" name="appbundle_para_[enfantsselect]" class="activatecheck"
+													{{ (attribute(params2, "pr_enfants").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_enfantsselect"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_enfantsupdate">Modifier :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_enfantsupdate" name="appbundle_para_[enfantsupdate]" class="activatecheck"
+													{{ (attribute(params2, "pr_enfants").allowUpdate == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_enfantsupdate"></label>
+										</div>
+									</td>
+									<td >
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right  "></span>
+										<label>Liaisons  enfants - assmats</label>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_enfamselect">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_enfamselect" name="appbundle_para_[enfamselect]" class="activatecheck"
+													{{ (attribute(params2, "pr_enfant_am").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_enfamselect"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_enfamupdate">Modifier :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_enfamupdate" name="appbundle_para_[enfamupdate]" class="activatecheck"
+													{{ (attribute(params2, "pr_enfant_am").allowUpdate == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_enfamupdate"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_enfamdelete">Supprimer :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_enfamdelete" name="appbundle_para_[enfamdelete]" class="activatecheck"
+													{{ (attribute(params2, "pr_enfant_am").allowDelete == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_enfamdelete"></label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right  "></span>
+										<label >Agenda des temps collectifs</label>
+									</td>
+									<td >
+										<label class="lableinsedtable" for="appbundle_para_agendaselect">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_agendaselect" name="appbundle_para_[agendaselect]" class="activatecheck"
+													{{ (attribute(params2, "pr_agenda").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_agendaselect"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_agendasinin">Inscrire :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_agendasinin" name="appbundle_para_[agendasinin]" class="activatecheck"
+													{{ (attribute(params2, "pr_agenda").allowInsert == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_agendasinin"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_agendasininforchild">Inscrire pour enfants :</label>
+										<div class="slideThree">
+											{#<input type="checkbox" id="appbundle_para_agendasininforchild" name="appbundle_para_[agendasininforchild]" class="activatecheck"#}
+													{#{{ (attribute(params2, "pr_agenda_enfants").allowInsert == true ) ? 'checked="checked"': "" }}>#}
+											<label class="toggle-check" for="appbundle_para_agendasininforchild"></label>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right  "></span>
+										<label >Liste des inscriptions</label>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_reselistselect">Afficher :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_reselistselect" name="appbundle_para_[reselistselect]" class="activatecheck"
+													{{ (attribute(params2, "pr_agenda_insc").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_reselistselect"></label>
+										</div>
+									</td>
+									<td>
+										<label class="lableinsedtable" for="appbundle_para_reselistdelete">Supprimer :</label>
+										<div class="slideThree">
+											{#<input type="checkbox" id="appbundle_para_reselistdelete" name="appbundle_para_[reselistdelete]" class="activatecheck"#}
+													{#{{ (attribute(params2, "pr_agenda_insc").allowDelete == true ) ? 'checked="checked"': "" }}>#}
+											<label class="toggle-check" for="appbundle_para_reselistdelete"></label>
+										</div>
+									</td>
+									<td>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<span class="fa fa-caret-right  "></span>
+										<label >Téléchargement des documents</label>
+									</td>
+									<td >
+										<label class="lableinsedtable" for="appbundle_para_allowdownlond">Autorisé  :</label>
+										<div class="slideThree">
+											<input type="checkbox" id="appbundle_para_allowdownlond" name="appbundle_para_[allowdownlond]" class="activatecheck"
+													{{ (attribute(params2, "pr_downlond_doc").dispaly == true ) ? 'checked="checked"': "" }}>
+											<label class="toggle-check" for="appbundle_para_allowdownlond"></label>
+										</div>
+									</td>
+									<td>
+									</td>
+									<td >
+									</td>
+								</tr>
+								</tbody>
+							</table>
+							<div class="parafootre">
+								<button class="btn btn-primary btn-xs" type="submit" id="saveuserParams" style="float: right;"> <i class=" fa fa-floppy-o"></i> Sauvegarder </button>
+							</div>
+						</form>
+					</div>
+				</div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

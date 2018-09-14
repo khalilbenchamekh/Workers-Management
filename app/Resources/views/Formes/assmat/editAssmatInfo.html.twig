@@ -1,0 +1,99 @@
+{% extends 'assmatpagesbase.html.twig' %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>modifier informations generales</h2>
+            <div class="panlecontainer">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">  
+                        <a class="btn btn-default btn-xs go_Back"> <i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  </a>
+                        <a class="btn btn-primary btn-xs" id="saveInfoGeniAssmat"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                {{ form_start(AssmatForm , {'attr': {'id': 'appbundle_gwassmat_edit'}}) }}
+                    <div>
+                        {{ form_label(AssmatForm.situationFamiliale, 'Situation famille :') }}
+                        {{ form_errors(AssmatForm.situationFamiliale) }}
+                        {{ form_widget(AssmatForm.situationFamiliale , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.civilite, 'Civilité :') }}
+                        {{ form_errors(AssmatForm.civilite) }}
+                        {{ form_widget(AssmatForm.civilite , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.nomNaissance, 'Nom :') }}
+                        {{ form_errors(AssmatForm.nomNaissance) }}
+                        {{ form_widget(AssmatForm.nomNaissance , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.prenomNaissance, 'Prénom :') }}
+                        {{ form_errors(AssmatForm.prenomNaissance) }}
+                        {{ form_widget(AssmatForm.prenomNaissance , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.dateNaissance, 'Date de Naissance :') }}
+                        {{ form_errors(AssmatForm.dateNaissance) }}
+                        {{ form_widget(AssmatForm.dateNaissance , { 'attr': { 'class' : 'form-control Assmat_Date_Nai' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.numRue, 'Numéro de rue :') }}
+                        {{ form_errors(AssmatForm.numRue) }}
+                        {{ form_widget(AssmatForm.numRue , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.rue1, 'Rue :') }}
+                        {{ form_errors(AssmatForm.rue1) }}
+                        {{ form_widget(AssmatForm.rue1 , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.rue2, 'Complément adresse :') }}
+                        {{ form_errors(AssmatForm.rue2) }}
+                        {{ form_widget(AssmatForm.rue2 , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.cp, 'Code postal :') }}
+                        {{ form_errors(AssmatForm.cp) }}
+                        {{ form_widget(AssmatForm.cp , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.ville, 'Ville :') }}
+                        {{ form_errors(AssmatForm.ville) }}
+                        {{ form_widget(AssmatForm.ville , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.quartier, 'Quartier :') }}
+                        {{ form_errors(AssmatForm.quartier) }}
+                        {{ form_widget(AssmatForm.quartier , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.secteur, 'Secteur :') }}
+                        {{ form_errors(AssmatForm.secteur) }}
+                        {{ form_widget(AssmatForm.secteur , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.rivoli, 'Rivoli/Fantor :') }}
+                        {{ form_errors(AssmatForm.rivoli) }}
+                        {{ form_widget(AssmatForm.rivoli , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.telFixe, 'Téléphone fixe :') }}
+                        {{ form_errors(AssmatForm.telFixe) }}
+                        {{ form_widget(AssmatForm.telFixe , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.telPortable, 'Téléphone portable :') }}
+                        {{ form_errors(AssmatForm.telPortable) }}
+                        {{ form_widget(AssmatForm.telPortable , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                    <div>
+                        {{ form_label(AssmatForm.adresseMail, 'Adresse mail :') }}
+                        {{ form_errors(AssmatForm.adresseMail) }}
+                        {{ form_widget(AssmatForm.adresseMail , { 'attr': { 'class' : 'form-control' } } ) }}
+                    </div>
+                {{ form_end(AssmatForm)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,145 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{% set iserrer = false %}
+<style type="text/css">
+    body{
+        height: auto;
+        width: auto;
+        background: #f4f4f4 url(" {{ asset('img/login-bg.jpg') }} ") no-repeat scroll center center / cover !important;
+        /*background-size: 1873px !important;*/
+        background-attachment: fixed !important;
+    }
+    .login .sess{
+        display: inline;
+        float: right;
+        margin-top: 3px;
+    }
+    .login .formGrope input{
+        float: right;
+        width: 275px;
+        border-radius:0px 6px 6px 0px;
+    }
+
+    .login .formGrope span{
+    position: absolute;
+    padding: 10px 20px 4px 18px;
+    margin: 9px 0px 0px 0px;
+    background: #8ed3ef;
+    top: 116px;
+    color: #fff;
+    }
+    .login .formGrope .username{
+        top: 55px;
+        padding: 8px 14px 6px 16px;
+    }
+    .loginerrors {
+        position: absolute;
+        background: #fff;
+        width: 420px;
+        padding: 8px 49px;
+        font-size: 11px;
+        color: #666;
+        margin-top: 5px;
+        border-radius: 3px;
+        border-top: 8px solid #8ed3ef;
+    }
+    #_submit{
+        border: none;
+        background: #8ed3ef;
+        color: #fff;
+        padding: 2px 9px 2px 9px;
+    }
+    #_submit:hover {
+        background: #1bc6a4;
+    }
+</style>
+
+<div id="wrapper" >
+    <div id="container" style="margin-top: 182px ">
+        <div class=" loginForm  ">
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                {% if error %}
+                        {% set iserrer = true  %}
+                {% endif %}
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                {% endif %}
+                <div class="login animated {{  ( iserrer )? 'shake' :'fadeInDown' }}">
+                    <img src="{{ asset('img/logo.png') }}" >
+                    <div class="formholder">
+                        <div class="randompad">
+                            <label>Remplissez votre login et mot de passe</label>
+                            <!-- <label for="username">{{ 'security.login.username'|trans }}</label> -->
+                            <!-- <label for="password">{{ 'security.login.password'|trans }}</label> -->
+                            <div class="formGrope">
+                                <span class="username"><i class="fa fa-user-circle "></i></span>    
+                                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                            </div>
+                            <div class="formGrope">
+                                <span ><i class="fa fa-unlock-alt "></i></span>
+                                <i id="showPassword" class="fa fa-eye"></i>    
+                                <input type="password" id="password" name="_password" required="required" />
+                            </div>
+                            <button type="submit" id="_submit" name="_submit" style="display: inline;"><i class="fa fa-check"></i> &nbsp;{{ 'security.login.submit'|trans }} </button>
+                            <div class="sess">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    {% if error %}
+                        <div class="loginerrors animated slideIn">
+                            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </form>
+            {#<form action="http://46.227.22.66/relais_assmat/web/app_dev.php/login_check" method="post" target="_blank">#}
+                {#{% if csrf_token %}#}
+                    {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+                {#{% endif %}#}
+                {#<input type="hidden" id="username" name="_username" required="required" value="admin"/>#}
+                {#<input type="hidden" id="password" name="_password" required="required" value="liger69*" />#}
+                {#<input type="hidden" id="remember_me" name="_remember_me" value="on" /><!--checked-->#}
+                {#<button type="submit"  name="_submit" >ppf</button>#}
+            {#</form>#}
+            {#<!-- action="{PPF_link}/login_check"-->#}
+            {#<form action="http://46.227.22.66/relais_assmat/web/app_dev.php/login_check" method="post" target="_blank">#}
+                {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+                {#<input type="hidden" id="username" name="_username" required="required" value="{{ app.user.username }}"/>#}
+                {#<input type="hidden" id="password" name="_password" required="required" value="{{ app.user.plainpassword }}" />#}
+                {#<input type="hidden" id="remember_me" name="_remember_me" value="on" /><!--checked-->#}
+                {#<button class="box2" type="submit"  name="_submit" style="background:transparent;float:left;padding:0;margin-top: -20px;" >#}
+                    {#<img src="/bundles/ligergramweb/images/tableau_bord/6.png" style="height: 45px;">#}
+                {#</button>#}
+            {#</form>#}
+            <!-- login form-->
+            {#<form action="http://46.227.22.66/relais_assmat/web/app_dev.php/login_check" method="post" target="_blank">#}
+                {#{% if csrf_token %}#}
+                    {#<input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />#}
+                {#{% endif %}#}
+                {#<input type="hidden" id="username" name="_username" required="required" value="{{ app.user.username }}" />#}
+                {#<input type="hidden" id="password" name="_password" required="required" value="{{ app.user.plainpassword }}" />#}
+                {#<input type="hidden" id="remember_me" name="_remember_me" value="on" /><!--checked-->#}
+                {#<button type="submit"  name="_submit" >ppf</button>#}
+            {#</form>#}
+        </div>
+        <style>
+            #feedback1 a img {
+                width: 250px;
+            }
+            #feedback1 a {
+                display: block;
+                position: fixed;
+                z-index: 998;
+                bottom: 0px;
+                left: 10px;
+            }
+        </style>
+        <div id="feedback1">
+            <a id="islpronto_link" onclick="window.open('https://server430.islonline.net/live/islpronto/start.html?_d=1&_s=1&lang=fr&location=http%3a%2f%2fgramweb.fr%2flogin&mobile=0&referrer=&template=d%3as6_0_924%7cc%3as6_0_330', 'newwindow', 'width=300,height=250'); return false;">
+                <img id="islpronto_image" alt="Live chat" src="{{ asset('img/en_ligne.png') }}" style="border:none">
+            </a>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,68 @@
+{% extends 'assmatpagesbase.html.twig' %}
+{% block pageContainer %}
+
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Modifier L'Agrement : ( <small>{{ AgremetForm.vars.value.nom != null ? AgremetForm.vars.value.nom.nom : ""}}</small>) </h2>
+            <div class="panlecontainer panleEdit">
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        <a class="btn btn-default btn-xs go_Back"> <i class=" fa fa-chevron-left" data-toggle="tooltip" data-placement="top" title="Arrière"></i>  </a>
+                        <a class="btn btn-primary  btn-xs" id="saveInfoAgrement"> <i class=" fa fa-floppy-o"></i> Sauvegarder </a>
+                    </div>
+                </div>
+                {{ form_start(AgremetForm , {'attr': {'id': 'appbundle_gwagrement_edit'}}) }}
+                <div>
+                    {{ form_label(AgremetForm.num, 'Numéro Agrément :') }}
+                    {{ form_errors(AgremetForm.num) }}
+                    {{ form_widget(AgremetForm.num , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.nom, 'Nom de l\'agrément :') }}
+                    {{ form_errors(AgremetForm.nom) }}
+                    {{ form_widget(AgremetForm.nom , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.definition, 'Définition :') }}
+                    {{ form_errors(AgremetForm.definition) }}
+                    {{ form_widget(AgremetForm.definition , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.statut, 'Statuts :') }}
+                    {{ form_errors(AgremetForm.statut) }}
+                    {{ form_widget(AgremetForm.statut , { 'attr': { 'class' : 'form-control' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.datedebut, 'Date de début :') }}
+                    {{ form_errors(AgremetForm.datedebut) }}
+                    {{ form_widget(AgremetForm.datedebut , { 'attr': { 'class' : 'form-control agrement_date_debut' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.datefin, 'Date de fin :') }}
+                    {{ form_errors(AgremetForm.datefin) }}
+                    {{ form_widget(AgremetForm.datefin , { 'attr': { 'class' : 'form-control agrement_date_fin' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.disponible, 'Disponibilité :') }}
+                    {{ form_errors(AgremetForm.disponible) }}
+                    <div class="slideThree">
+                        {{ form_widget(AgremetForm.disponible , { 'attr': { 'class' : 'activatecheck' } } ) }}
+                        <label for="appbundle_gwagrement_disponible"></label>
+                    </div>
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.datelibre, 'Date libre le :') }}
+                    {{ form_errors(AgremetForm.datelibre) }}
+                    {{ form_widget(AgremetForm.datelibre , { 'attr': { 'class' : 'form-control agrement_date_liber' } } ) }}
+                </div>
+                <div>
+                    {{ form_label(AgremetForm.details, 'Détails :', {'label_attr': {'class': 'textaeraiLable'}}) }}
+                    {{ form_errors(AgremetForm.details) }}
+                    {{ form_widget(AgremetForm.details , { 'attr': { 'class' : 'form-control' , 'data-role' : 'tagsinput'} } ) }}
+                </div>
+                {{ form_end(AgremetForm)}}
+            </div>
+        </div>
+    </div>
+{% endblock %}

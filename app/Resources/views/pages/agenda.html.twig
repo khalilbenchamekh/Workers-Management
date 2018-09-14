@@ -1,0 +1,150 @@
+{% extends 'pagesbase.html.twig' %}
+{% set action =  app.request.attributes.get('action') %}
+{% set amnom = "" %}
+{% if ( do == "amagenda" ) %}
+    {% for as in amlist %}
+        {% if as.id ==  action %}
+            {% set amnom = as.nomNaissance ~ " " ~ as.prenomNaissance %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span>Calendrier des temps collectifs</h2>
+            <div class="panlecontainer" >
+                <div class="panleContainerHead">
+                    <div class="clearfix col-lg-6 updateinfo">
+                        <a class="btn btn-default btn-xs"
+                           href="{{ path('agenda_all') }}">
+                            <i class=" fa fa-calendar" data-toggle="tooltip" data-placement="top" title="Afficher tout l'agenda"></i>
+                        </a>
+                        <div class="dropdown" style="margin: 0px 10px;display: inline-block;" data-toggle="tooltip" data-placement="top" title="l'agenda d'un assistant maternel {{ amnom }}.">
+                            <button class="btn btn-danger btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {% if ( do == "amagenda") %}
+                                    L'agenda de {{ amnom }}
+                                {% else %}
+                                    Afficher l'agenda de .
+                                {% endif %}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                {% for as in amlist %}
+                                    <li><a href="{{ path('agenda_action' , {'action': as.id} ) }}">{{ as.nomNaissance ~ " " ~ as.prenomNaissance }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <a class="btn btn-primary btn-xs" href="{{ path('agenda_action' , {'action':'Events'} ) }}" data-toggle="tooltip"
+                           data-placement="top" title="les événements disponible pour vous.">
+                            <i class=" fa fa-calendar-check-o"></i>
+                            Afficher les Événements valide
+                        </a>
+                    </div>
+                </div>
+                <div id="calendar"></div>
+            </div>
+            <div class="agendacolors col-lg-6 col-md-6 col-sm-12">
+                {% if ( do == "amagenda" ) %}
+                    <div class="bg-primary text-white" style="color: #fff;background: #5fb3f0;padding-left: 6px" >Nouveau événement au quel inscrit {{ amnom }}</div>
+                    <div class="bg-info text-white" style="color: #fff;background: #777;padding-left: 6px">Nouveau événement au quel vous n'êtes pas inscrit  {{ amnom }}</div>
+                {% else %}
+                    <div class="bg-primary text-white" style="color: #fff;background: #5fb3f0;padding-left: 6px" >Nouveau événement au quel vous étiez inscrit.</div>
+                    <div class="bg-success text-white"style="color: #fff;background: #09c909;padding-left: 6px">Nouveau événement au quel vous n'êtes pas inscrit</div>
+                    {% if( do != "Events") %}
+                    <div class="bg-info text-white"style="color: #fff;background: #6995b5;padding-left: 6px" >Ancien évènement au quel vous étiez inscrit.</div>
+                    <div class="bg-info text-white"style="color: #fff;background: #777;padding-left: 6px" >Événement terminé au quel vous n'étiez pas inscrit.</div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        "use strict";
+        $(document).ready(function() {
+            $('#calendar').fullCalendar( {
+                lang:'fr',
+                weekNumbers: true,
+                displayEventTime: false,
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month,basicWeek,basicDay'
+                },
+                events: [
+                    {% for ev in evs %}
+                    {
+                        id : '{{ ev.id }}' ,
+                        title : "{{ ev.title|raw }}",
+                        start : '{{ ev.startDatetime|date("Y-m-d h:m:s") }}',
+                        {#end : '{{ ev.endDatetime|date_modify("+4 H")|date("Y-m-d h:m:s") }}',#}
+                        HDeb : '{{ ev.HDeb }}',
+                        HFin : '{{ ev.HFin }}',
+                        url2: '{{ ev.url }}',
+                        isUsed : '{{ ev.isUsed  }}',
+                        backgroundColor : '{{ ev.bgColor }}'
+                    },
+                    {% endfor %}
+                ],
+                //Click Event
+                eventClick: function(calEvent, jsEvent, view) {
+//                    $(this).css('background-color', 'rgb(251, 134, 35)');
+                },
+                //ToolTip Event
+                eventRender: function(event, element) {
+                    var urlo = "";
+                    if ( event.isUsed == false ){
+                        if(event.start < new Date()){
+                            urlo = '<span class="label label-default" style="font-size: 10px">événement terminé</span>';
+                        }else{
+                            if(event.url2 === "null")
+                                urlo = '<span class="label label-danger" style="font-size: 10px">Aucune places desponible </span>';//Nombre des places est null
+                            else{
+                                if( event.url2 == false)
+                                    urlo = '';
+                                else
+                                    urlo = '<a href="'+ event.url2 +'" class="btn btn-success btn-xs btn-sinscrireparent"> S\'inscrire </a>' ;
+                            }
+                        }
+                    }else{
+                        urlo += '<span class="label label-info" style="font-size: 10px">déjà inscrit</span>';
+                    }
+                    {% if ( do == "amagenda" ) %}
+                        urlo = "";
+                    {% endif %}
+                    element.qtip({
+                        content:{
+                            title: { text: event.title },
+                            text: '<span class="title">Début : </span>' + ( ( event.HDeb.length > 6 )? event.HDeb.substr(10, 6) :event.HDeb ) +
+                            '<br><span class="title">Fin : </span>' + ( ( event.HDeb.length > 6 )? event.HFin.substr(10, 6) :  event.HFin )+
+                            '<br>' + //<span class="title">Description: . </span>'+ //+ event.description
+                            '<br>' + urlo
+                        },
+                        show: { solo: true },
+                        hide: { when: 'inactive', delay: 1000 ,fixed: true },
+                        style: {
+                            width: 'auto',
+                            padding: 5,
+                            color: 'black',
+                            textAlign: 'left',
+                            border: {
+                                width: 1,
+                                radius: 3
+                            },
+                            tip: 'topLeft',
+                            classes: {
+                                tooltip: 'ui-widget',
+                                tip: 'ui-widget',
+                                title: 'ui-widget-header',
+                                content: 'ui-widget-content'
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}

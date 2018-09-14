@@ -1,0 +1,144 @@
+{% extends 'adminpagesbase.html.twig' %}
+{% set usertype =  app.request.attributes.get('userType') %}
+{% set existNewUsers = ( gwNbUsers > users|length ) ? true : false %}
+{% block pageContainer %}
+    <div class="myrow">
+        <div class="contenu_fieldset" style="display: block;">
+            <h2 class="panleHead">
+                <span>| &nbsp; </span> Gestion des utilisateurs {{ panleHead }}</h2>
+            <div class="panlecontainer">
+				<div class="panleContainerHead">
+				  <div class="clearfix col-lg-6 updateinfo">
+					  <form action="{{ path('send_acces_vai_email_groupe') }}" method="post" style="float: left;">
+						  <input type="hidden" name="selecetdusersids" id="selecetd_users_ids" value="">
+						  <button class="btn btn-primary btn-xs disabled" id="sendEmailGroupe" type="submit"
+							  data-toggle="tooltip" data-placement="top" title="Envoi du courriel des accès aux utilisateurs séléctionnés">
+							  <i class="fa fa-send"></i>
+							  Envoyer Mail Groupé
+						  </button>
+					  </form>
+					  {#<a class="btn btn-primary btn-xs"> <i class=" fa fa-pencil-square-o"></i> Ajouter </a>#}
+					  <a class="btn {{ existNewUsers ? 'btn-danger' : 'btn-default' }}  btn-xs" id="installusers"
+						 href=" {{ (usertype == 'all') ? '#': path(installroute)  }} " style="float: none;">
+						  <i class=" fa fa-level-down"></i>
+						  MISE A JOUR {{ panleHead|replace({'>': ""})  }}
+					  </a>
+					  {#<span>{{ users|length }} / {{ gwNbUsers }} dans Gramweb </span>#}
+				  </div>
+				  <div class="progrecebar clearfix ">
+					<img src="{{ asset('img/default.gif') }}">
+				  </div>
+				</div>
+                <table id="table_admin_users" class="table table-striped table-hover" style="max-width: 898px;">
+                    <thead> 
+                        <tr>
+							<th class="tableThTitle" ><input type="checkbox" id="selecteAllUsersIds"></th>
+                            <th class="tableThTitle" >Id </th>
+                            <th class="tableThTitle" >Pseudo</th>
+                            {#{{ app.request.get('name') }}#}
+							{% set rout = app.request.get('userType') %}
+                            {% if ( rout == "parent" )%}
+								<th class="tableThTitle" >Respo 1</th>
+								<th class="tableThTitle" >Respo 2</th>
+                            {% endif %}
+							{% if ( rout == "assmat" or rout == "part" )%}
+								<th class="tableThTitle" >Nom</th>
+								<th class="tableThTitle" >Prénom</th>
+							{% endif %}
+                            <th class="tableThTitle" >Courriel</th>
+							<th class="tableThTitle" >Date email</th>
+							<th class="tableThTitle" >Date MAJ</th>
+                            <th class="tableThTitle" >Actions</th>
+                        </tr> 
+                    </thead> 
+                    <tbody> 
+                    	{% for item in users %}
+	                        <tr>
+								<td><input type="checkbox" class="checkUserId" id="{{ item.id }}"></td>
+	                            <th scope="row">{{ item.id }}</th> 
+	                            <td>{{ item.username }} </td>
+                                {% if ( app.request.get('userType') == "parent" )%}
+                                    {% set responams =  user_service.getResposNams(item.p_a_pt_id) %}
+									<td>{{ responams.nam1 ~' '~ responams.pre1 }}</td>
+									<td>{{ responams.nam2 ~' '~ responams.pre2 }}</td>
+                                {% endif %}
+                                {% if ( rout == "assmat"  )%}
+                                    {% set responams =  user_service.getAmNam(item.p_a_pt_id) %}
+									<td>{{ responams.nam }}</td>
+									<td>{{ responams.pre }}</td>
+                                {% endif %}
+                                {% if ( rout == "part"  )%}
+                                    {% set responams =  user_service.getPartNam(item.p_a_pt_id) %}
+									<td>{{ responams.nam }}</td>
+									<td>{{ responams.pre }}</td>
+                                {% endif %}
+	                            <td>{{ item.email }}</td>
+	                            <td>{{ item.dateEmail ? item.dateEmail|date('d/m/Y') : ""}}</td>
+	                            <td>{{ item.dateMAJ ?  item.dateMAJ|date('d/m/Y') : "" }}</td>
+	                            <td class="ActionTd">
+									<div class="dropdown">
+                                        {% set count = update_logs_service.getCountUpdatesForOneUser(item.id) %}
+										<button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
+											<span class="caret" data-toggle="tooltip" data-placement="top" title="Les Actions" ></span>
+                                            {% if count > 0  %}
+												<span class="badge activebadge menubadge">{{ count }}</span>
+                                            {% endif %}
+										</button>
+										<ul class="dropdown-menu selectbtnmenu">
+											<li>
+												<a href="{{ path('edit_parent' , {'id': item.id } ) }}" class="btnactions">
+	                                    			<span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Modifier">
+	                                        			<i class="fa fa-square-o fa-stack-2x"></i>
+	                                        			<i class="fa fa-pencil fa-stack-1x"></i>
+	                                    			</span>
+												</a>
+											</li>
+											<li>
+												<a href=" {{ path('show_parent' , {'id': item.id } ) }} " class="btnactions">
+													<span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Afficher">
+														<i class="fa fa-square-o fa-stack-2x"></i>
+														<i class="fa fa-eye fa-stack-1x"></i>
+													</span>
+												</a>
+											</li>
+                                            {% if(item.usertype != "admin") %}
+												<li>
+													<a href=" {{ item.usertype != "part" ? path('user_para'~item.usertype , {'id': item.id } ): '#' }} " class="btnactions" data-toggle="tooltip" data-placement="top" title="Paramètre">
+														<span class="fa-stack fa-lg">
+															<i class="fa fa-square-o fa-stack-2x"></i>
+															<i class="fa fa-cog fa-stack-1x"></i>
+														</span>
+													</a>
+												</li>
+                                                {#'Admin_Logs_index_user' , ['user_id' => $update_logs->getUserId() ]#}
+												<li>
+													<a href=" {{ item.usertype != "part" ? path('Admin_Logs_index_user', {'user_id': item.id } ): '#' }} " class="btnactions" data-toggle="tooltip" data-placement="top" title="Historique des modifications">
+														<span class="fa-stack fa-lg">
+															<i class="fa fa-square-o fa-stack-2x"></i>
+															<i class="fa fa-list fa-stack-1x"></i>
+														{% if count > 0  %}
+															<span class="badge activebadge">{{ count }}</span>
+														{% endif %}
+														</span>
+													</a>
+												</li>
+                                            {% endif %}
+											<li>
+												<a href="{{ path('send_acces_vai_email' , {'id': item.id } ) }}" class="btnactions">
+													<span class="fa-stack fa-lg" data-toggle="tooltip" data-placement="top" title="Envoyer les accès par mail.">
+														<i class="fa fa-square-o fa-stack-2x"></i>
+														<i class="fa fa-envelope-o fa-stack-1x"></i>
+													</span>
+												</a>
+											</li>
+
+										</ul>
+									</div>
+	                            </td>
+	                        </tr> 
+                    	{% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
